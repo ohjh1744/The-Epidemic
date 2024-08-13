@@ -104,7 +104,6 @@ namespace TheEpidemic
         private bool _finishScene = false;
         private IGameManager _gameManager;
         private int _numInput;
-        private int _numEpidemic;
         private IPlayer _player;
         private IGlobal _global;
 
@@ -164,12 +163,12 @@ namespace TheEpidemic
                 Console.WriteLine($"3. 스킬 사용 (쿨타임 {_gameManager.Epidemic.BuffWaitTime}일 남았습니다.)");
                 Console.WriteLine("4. 다음 날로 넘어가기");
                 Console.WriteLine("---------------------------------------------------------------------------------");
-            } while (int.TryParse(Console.ReadLine(), out _numEpidemic) == false || _numEpidemic < 0 || _numEpidemic > 4);
+            } while (int.TryParse(Console.ReadLine(), out _numInput) == false || _numInput < 0 || _numInput > 4);
         }
 
         public void Update()
         {
-            switch (_numEpidemic)
+            switch (_numInput)
             {
                 case 1:
                     _player.UpInfectRate();
