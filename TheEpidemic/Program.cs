@@ -6,7 +6,7 @@
         {
             IGameManager gameManager;
             IEpidemicFactory epidemicFactory;
-            IEpidemic epidemic;
+            Epidemic epidemic;
             ISceneFactory sceneFactory;
             IScene scene;
             IScene[] scenes = new IScene[3];

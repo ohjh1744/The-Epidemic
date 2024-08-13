@@ -8,12 +8,12 @@ namespace TheEpidemic
 {
     public interface IEpidemicFactory
     {
-        IEpidemic Create();
+        Epidemic Create();
     }
 
     public class VirusFactory : IEpidemicFactory
     {
-        public IEpidemic Create()
+        public Epidemic Create()
         {
             return new Virus();
         }
@@ -21,7 +21,7 @@ namespace TheEpidemic
 
     public class BacteriaFactory: IEpidemicFactory
     {
-        public IEpidemic Create()
+        public Epidemic Create()
         {
             return new Bacteria();
         }

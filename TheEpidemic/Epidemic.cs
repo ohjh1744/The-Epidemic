@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace TheEpidemic
 {
-    public abstract class IEpidemic
+    public abstract class Epidemic
     {
         private string _name;
         private int _infectRate;
@@ -21,10 +22,11 @@ namespace TheEpidemic
 
         public abstract void UseSkill();
 
+
     }
 
 
-    public class Virus : IEpidemic
+    public class Virus : Epidemic
     {
 
         public Virus()
@@ -52,7 +54,7 @@ namespace TheEpidemic
 
     }
 
-    public class Bacteria : IEpidemic
+    public class Bacteria : Epidemic
     {
         public Bacteria()
         {

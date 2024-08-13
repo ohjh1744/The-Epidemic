@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -101,14 +102,18 @@ namespace TheEpidemic
         private bool _finishScene = false;
         private IGameManager _gameManager;
         private int _numInput;
+        private int _numEpidemic;
+        private IPlayer player;
 
         public void Awake(IGameManager gameManager)
         {
             _gameManager = gameManager;
+            player = new Player(gameManager.Epidemic);
         }
         public void Render()
         {
             Console.Clear();
+            _gameManager.Reset();
             for (int i = 0; i < 20; i++)
             {
                 for(int j = 0; j < 30; j++)
@@ -121,6 +126,20 @@ namespace TheEpidemic
                     {
                         Console.Write("■");
                     }
+                    else if (_gameManager.Map[i, j] == 2)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.Write("■");
+                        Console.ResetColor();
+                        _gameManager.Infected++;
+                    }
+                    else if (_gameManager.Map[i, j] == 3)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write("■");
+                        Console.ResetColor();
+                        _gameManager.Death++;
+                    }
                 }
                 Console.WriteLine();
             }
@@ -130,12 +149,31 @@ namespace TheEpidemic
 
         public void Input()
         {
-            Console.ReadLine();
+            do
+            {
+                Console.WriteLine("하고 싶은 행동을 고르세요. (잘못입력시 재입력)");
+                Console.WriteLine("1. 전염률 증가: ");
+                Console.WriteLine("2. 치사율 증가: ");
+                Console.WriteLine("3. 다음 날로 넘어가기");
+            } while (int.TryParse(Console.ReadLine(), out _numEpidemic) == false || _numEpidemic < 0 || _numEpidemic > 3);
         }
 
         public void Update()
         {
-
+            switch (_numEpidemic)
+            {
+                case 1:
+                    player.UpInfectRate();
+                    break;
+                case 2:
+                    player.UpFatalityRate();
+                    break;
+                case 3:
+                    player.Next(_gameManager);
+                    break;
+                default:
+                    break;
+            }
         }
 
         public bool FinishScene { get { return _finishScene; } set { _finishScene = value; } }

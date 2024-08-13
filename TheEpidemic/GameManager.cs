@@ -16,8 +16,12 @@ namespace TheEpidemic
         int Infected { get; set; }
         // 현재 죽음수
         int Death { get; set; }
+        // Day날짜
+        int Day { get; set; }
         // 상태 출력
         void Show();
+
+        void Reset();
     }
 
     public class GameManager : IGameManager
@@ -28,6 +32,7 @@ namespace TheEpidemic
         private int[,] _map;
         private int _infected;
         private int _death;
+        private int _day;
 
         public GameManager()
         {
@@ -67,6 +72,8 @@ namespace TheEpidemic
         public int[,] Map { get { return _map; } set { _map = value; } }
         public int Infected { get { return _infected; } set { _infected = value; } }
         public int Death { get { return _death; } set { _death = value; } }
+
+        public int Day { get { return _day; } set { _day = value; } }
         public void Show()
         {
             Console.WriteLine($"-------------------------------");
@@ -77,6 +84,12 @@ namespace TheEpidemic
             Console.WriteLine($"전염수: {Infected}");
             Console.WriteLine($"사망수: {Death}");
             Console.WriteLine($"-------------------------------");
+        }
+
+        public void Reset()
+        {
+            Infected = 0;
+            Death = 0;
         }
     }
 }
