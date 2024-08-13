@@ -5,9 +5,9 @@ namespace TheEpidemic
     public interface IGameManager
     {
         //전염병 종류
-        List<IEpidemic> Epidemics { get; set; } 
+        List<Epidemic> Epidemics { get; set; }
         // Player
-        IEpidemic Epidemic { get; set; }
+        Epidemic Epidemic { get; set; }
         //상대
         IGlobal Global { get; set; }
         //맵 상태 1: 전염, 2: 죽음
@@ -22,8 +22,8 @@ namespace TheEpidemic
 
     public class GameManager : IGameManager
     {
-        private List<IEpidemic> _epidemics;
-        private IEpidemic _epidemic;
+        private List<Epidemic> _epidemics;
+        private Epidemic _epidemic;
         private IGlobal _global;
         private int[,] _map;
         private int _infected;
@@ -31,7 +31,7 @@ namespace TheEpidemic
 
         public GameManager()
         {
-            _epidemics = new List<IEpidemic>();
+            _epidemics = new List<Epidemic>();
             _epidemic = new Virus();
             _global = new Global();
             _map = new int[,]
@@ -61,8 +61,8 @@ namespace TheEpidemic
             _death = 0;
         }
 
-        public List<IEpidemic> Epidemics { get { return _epidemics; } set { _epidemics = value; } }
-        public IEpidemic Epidemic { get { return _epidemic; } set { _epidemic = value; } }
+        public List<Epidemic> Epidemics { get { return _epidemics; } set { _epidemics = value; } }
+        public Epidemic Epidemic { get { return _epidemic; } set { _epidemic = value; } }
         public IGlobal Global { get { return _global; } set { _global = value; } }
         public int[,] Map { get { return _map; } set { _map = value; } }
         public int Infected { get { return _infected; } set { _infected = value; } }
