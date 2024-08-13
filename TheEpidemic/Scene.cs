@@ -32,6 +32,8 @@ namespace TheEpidemic
             Console.WriteLine("#        전염병 퍼트리기              #");
             Console.WriteLine("#                                     #");
             Console.WriteLine("#######################################");
+            Console.WriteLine("게임설명: 질병을 전세계에 퍼트리세요!");
+            Console.WriteLine("게임설명: 치료제가 완성하기전에 전세계의 인구를 멸종시키면 당신의 승리입니다.");
             Console.Write("게임을 하실거면 엔터를 눌러주세요.: ");
 
         }
@@ -70,12 +72,12 @@ namespace TheEpidemic
             Console.WriteLine("1. 박테리아");
             Console.WriteLine("전염률: 3");
             Console.WriteLine("치사률: 2");
-            Console.WriteLine("스킬:  이틀동안 치사율 두 배 상승, 쿨타임: 3일");
+            Console.WriteLine("스킬:  이틀동안 치사율 두 배 상승, 쿨타임: 4일");
             Console.WriteLine("#################################");
             Console.WriteLine("2. 바이러스");
             Console.WriteLine("전염률: 5");
             Console.WriteLine("치사률: 1");
-            Console.WriteLine("스킬:  이틀 동안 전염률 두 배 상승, 쿨타임: 3일");
+            Console.WriteLine("스킬:  이틀 동안 전염률 두 배 상승, 쿨타임: 4일");
             Console.WriteLine("#################################");
             Console.WriteLine("원하는 전염병을 선택해주세요.(잘못입력시 재입력)");
         }
@@ -141,6 +143,7 @@ namespace TheEpidemic
                         Console.Write("■");
                         Console.ResetColor();
                         _gameManager.Death++;
+                        _gameManager.Survivor--;
                     }
                 }
                 Console.WriteLine();
@@ -158,7 +161,7 @@ namespace TheEpidemic
                 Console.WriteLine($"하고 싶은 행동을 고르세요. (잘못입력시 재입력)       보유골드: {_player.Gold}G");
                 Console.WriteLine($"1. 전염률 증가({_player.GoldUpInfectRate}G): ");
                 Console.WriteLine($"2. 치사율 증가({_player.GoldUpFatalityRate}G): ");
-                Console.WriteLine("3. 스킬 사용");
+                Console.WriteLine($"3. 스킬 사용 (쿨타임 {_gameManager.Epidemic.BuffWaitTime}일 남았습니다.)");
                 Console.WriteLine("4. 다음 날로 넘어가기");
                 Console.WriteLine("---------------------------------------------------------------------------------");
             } while (int.TryParse(Console.ReadLine(), out _numEpidemic) == false || _numEpidemic < 0 || _numEpidemic > 4);
@@ -181,6 +184,23 @@ namespace TheEpidemic
                     _player.Next(_gameManager);
                     _global.UpCure();
                     break;
+            }
+            GameFinish();
+        }
+
+        public void GameFinish()
+        {
+           if(_global.Cure >= 100)
+           {
+                if (_gameManager.Survivor <= 0)
+                {
+                    Console.WriteLine("전 세계 인구를 멸종시켰습니다. 축하드립니다!");
+                }
+                else
+                {
+                    Console.WriteLine("인구가 치료제를 완성시켰습니다. 패배했습니다.");
+                }
+                FinishScene = true;
             }
         }
 

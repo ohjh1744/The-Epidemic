@@ -12,7 +12,7 @@ namespace TheEpidemic
         private string _name;
         private int _infectRate;
         private int _fatalityRate;
-        private int _buffTime;
+        private int _buffWaitTime;
         private int _buffDuration;
         private bool _isBuff;
 
@@ -21,7 +21,7 @@ namespace TheEpidemic
         public string Name { get { return _name; } set { _name = value; } }
         public int InfectRate { get { return _infectRate; } set { _infectRate = value; } }
         public int FatalityRate { get { return _fatalityRate; } set { _fatalityRate = value; } }
-        public int BuffTime { get { return _buffTime; } set { _buffTime = value; } }
+        public int BuffWaitTime { get { return _buffWaitTime; } set { _buffWaitTime = value; } }
         public int BuffDuration { get { return _buffDuration; } set { _buffDuration = value; } }
         public bool IsBuff { get { return _isBuff; } set { _isBuff = value; } }
 
@@ -41,7 +41,7 @@ namespace TheEpidemic
             Name = "바이러스";
             InfectRate = 5;
             FatalityRate = 1;
-            BuffTime = 0;
+            BuffWaitTime = 0;
             BuffDuration = 2;
             IsBuff = false;
         }
@@ -50,7 +50,7 @@ namespace TheEpidemic
         public void EnforceSkill()
         {
             InfectRate *= 2;
-            BuffTime = 3;
+            BuffWaitTime = 4;
         }
 
         public override void Buff()
@@ -76,7 +76,9 @@ namespace TheEpidemic
             Name = "박테리아";
             InfectRate = 3;
             FatalityRate = 2;
-            BuffTime = 0;
+            //쿨타임
+            BuffWaitTime = 0;
+            //지속시간
             BuffDuration = 2;
         }
 
@@ -84,7 +86,7 @@ namespace TheEpidemic
         public void EnforceSkill()
         {
             FatalityRate *= 2;
-            BuffTime = 3;
+            BuffWaitTime = 4;
         }
 
         public override void Buff()

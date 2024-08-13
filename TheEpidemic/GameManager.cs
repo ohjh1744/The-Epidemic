@@ -14,8 +14,11 @@ namespace TheEpidemic
         int[,] Map { get; set; }
         // 현재 전염수
         int Infected { get; set; }
+        //세계인구수
+        int Human { get; set; }
         // 현재 죽음수
         int Death { get; set; }
+        int Survivor { get; set; }
         // Day날짜
         int Day { get; set; }
         // 상태 출력
@@ -32,6 +35,8 @@ namespace TheEpidemic
         private int[,] _map;
         private int _infected;
         private int _death;
+        private int _human;
+        private int _survivor;
         private int _day;
 
         public GameManager()
@@ -64,6 +69,20 @@ namespace TheEpidemic
             };
             _infected = 0;
             _death = 0;
+            _human = 0;
+
+            for(int i = 0; i < 20; i++)
+            {
+                for(int j = 0; j < 30; j++)
+                {
+                    if (Map[i, j] == 1)
+                    {
+                        Human++;
+                    }
+                }
+            }
+            _survivor = Human;
+            _day = 1;
         }
 
         public List<Epidemic> Epidemics { get { return _epidemics; } set { _epidemics = value; } }
@@ -72,7 +91,8 @@ namespace TheEpidemic
         public int[,] Map { get { return _map; } set { _map = value; } }
         public int Infected { get { return _infected; } set { _infected = value; } }
         public int Death { get { return _death; } set { _death = value; } }
-
+        public int Human { get { return _human; } set { _human = value; } }
+        public int Survivor { get { return _survivor; } set { _survivor = value; } }
         public int Day { get { return _day; } set { _day = value; } }
         public void Show()
         {
@@ -82,6 +102,7 @@ namespace TheEpidemic
             Console.WriteLine($"전염률: {Epidemic.InfectRate}");
             Console.WriteLine($"치사율: {Epidemic.FatalityRate}");
             Console.WriteLine($"치료제 개발율: {_global.Cure}");
+            Console.WriteLine($"생존자: {Survivor}");
             Console.WriteLine($"전염수: {Infected}");
             Console.WriteLine($"사망수: {Death}");
             Console.WriteLine($"-------------------------------");
@@ -91,6 +112,7 @@ namespace TheEpidemic
         {
             Infected = 0;
             Death = 0;
+            Survivor = Human;
         }
     }
 }

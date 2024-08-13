@@ -67,13 +67,13 @@
 
         public void UseSkill()
         {
-            if(Epidemic.BuffTime == 0)
+            if(Epidemic.BuffWaitTime == 0)
             {
                 Epidemic.Buff();
             }
             else
             {
-                Console.WriteLine($"아직 {Epidemic.BuffTime}일 지나야합니다.");
+                Console.WriteLine($"아직 {Epidemic.BuffWaitTime}일 지나야합니다.");
             }
         }
         public void Next(IGameManager gameManager)
@@ -90,8 +90,11 @@
                 {
                     Epidemic.DeBuff();
                 }
-                Epidemic.BuffTime--;
             }
+            if (Epidemic.BuffWaitTime != 0){
+                Epidemic.BuffWaitTime--;
+            }
+
         }
 
 
@@ -99,25 +102,6 @@
         {
             int[,] map = gameManager.Map;
             bool[,] visited = new bool[20, 30];
-
-            for (int i = 0; i < 20; i++)  
-            {
-                for (int j = 0; j < 30; j++)
-                {
-                    visited[i, j] = false;
-                }
-            }
-
-            for (int i = 0; i < 20; i++)
-            {
-                for (int j = 0; j < 30; j++)
-                {
-                    if (map[i, j] == 1 && visited[i, j] == false)
-                    {
-                        InfectorKillBfs(i, j, 1, map, visited, Epidemic.InfectRate);
-                    }
-                }
-            }
 
             for (int i = 0; i < 20; i++)
             {
@@ -138,6 +122,24 @@
                 }
             }
 
+            for (int i = 0; i < 20; i++)  
+            {
+                for (int j = 0; j < 30; j++)
+                {
+                    visited[i, j] = false;
+                }
+            }
+
+            for (int i = 0; i < 20; i++)
+            {
+                for (int j = 0; j < 30; j++)
+                {
+                    if (map[i, j] == 1 && visited[i, j] == false)
+                    {
+                        InfectorKillBfs(i, j, 1, map, visited, Epidemic.InfectRate);
+                    }
+                }
+            }
 
 
         }
