@@ -8,23 +8,22 @@ namespace TheEpidemic
 {
     public interface IScene
     {
-        public void Awake();
         public void Render();
         public  void Input();
         public void Update();
+
+        public bool FinishScene { get; set; }
+
     }
 
     public interface IAwake
     {
-        public void Start(IGameManager gameManager, IEpidemic epidemic);
+        public void Awake(IGameManager gameManager, IEpidemic epidemic);
     }
 
-    public class FirstScene: IScene
+    public class FirstScene : IScene
     {
-        public void Awake()
-        {
-
-        }
+        private bool _finishScene = false;
         public void Render()
         {
 
@@ -39,15 +38,16 @@ namespace TheEpidemic
         {
 
         }
+
+       public bool FinishScene{ get { return _finishScene; } set{ _finishScene = value; } }
+
+ 
     }
 
     public class ChoiceScene:IScene, IAwake
     {
-        public void Awake()
-        {
-
-        }
-        public void Start(IGameManager gameManager, IEpidemic epidemic)
+        private bool _finishScene = false;
+        public void Awake(IGameManager gameManager, IEpidemic epidemic)
         {
 
         }
@@ -65,15 +65,14 @@ namespace TheEpidemic
         {
 
         }
+        public bool FinishScene { get { return _finishScene; } set { _finishScene = value; } }
+
     }
 
     public class GameScene : IScene, IAwake
     {
-        public void Awake()
-        {
-
-        }
-        public void Start(IGameManager gameManager, IEpidemic epidemic)
+        private bool _finishScene = false;
+        public void Awake(IGameManager gameManager, IEpidemic epidemic)
         {
 
         }
@@ -91,5 +90,7 @@ namespace TheEpidemic
         {
 
         }
+
+        public bool FinishScene { get { return _finishScene; } set { _finishScene = value; } }
     }
 }

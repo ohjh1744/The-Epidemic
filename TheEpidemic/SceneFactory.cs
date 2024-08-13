@@ -8,51 +8,30 @@ namespace TheEpidemic
 {
     public interface ISceneFactory
     {
-        IScene CreateScene(int num);
+        IScene CreateScene();
     }
 
     public class FirstSceneFactory : ISceneFactory
     {
-        public IScene CreateScene(int num)
+        public IScene CreateScene()
         {
-            if(num == 1)
-            {
-                return new FirstScene();
-            }
-            else
-            {
-                throw new InvalidOperationException("숫자 1만 반환합니다.");
-            }
+            return new FirstScene();
         }
     }
 
     public class ChoiceSceneFactory : ISceneFactory
     {
-        public IScene CreateScene(int num)
+        public IScene CreateScene()
         {
-            if (num == 2)
-            {
-                return new ChoiceScene();
-            }
-            else
-            {
-                throw new InvalidOperationException("숫자 2만 반환합니다.");
-            }
+            return new ChoiceScene();
         }
     }
 
     public class GameSceneFactory : ISceneFactory
     {
-        public IScene CreateScene(int num)
+        public IScene CreateScene()
         {
-            if (num == 3)
-            {
-                return new GameScene();
-            }
-            else
-            {
-                throw new InvalidOperationException("숫자 3만 반환합니다.");
-            }
+            return new GameScene();
         }
     }
 }
