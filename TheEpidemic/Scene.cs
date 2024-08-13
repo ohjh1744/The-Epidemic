@@ -103,12 +103,14 @@ namespace TheEpidemic
         private IGameManager _gameManager;
         private int _numInput;
         private int _numEpidemic;
-        private IPlayer player;
+        private IPlayer _player;
+        private IGlobal _global;
 
         public void Awake(IGameManager gameManager)
         {
             _gameManager = gameManager;
-            player = new Player(gameManager.Epidemic);
+            _player = new Player(gameManager.Epidemic);
+            _global = gameManager.Global;
         }
         public void Render()
         {
@@ -143,6 +145,7 @@ namespace TheEpidemic
                 }
                 Console.WriteLine();
             }
+            _global.FindEpidemic(_gameManager);
             _gameManager.Show();
 
         }
@@ -152,9 +155,9 @@ namespace TheEpidemic
             do
             {
                 Console.WriteLine("---------------------------------------------------------------------------------");
-                Console.WriteLine($"하고 싶은 행동을 고르세요. (잘못입력시 재입력)       보유골드: {player.Gold}G");
-                Console.WriteLine($"1. 전염률 증가({player.GoldUpInfectRate}G): ");
-                Console.WriteLine($"2. 치사율 증가({player.GoldUpFatalityRate}G): ");
+                Console.WriteLine($"하고 싶은 행동을 고르세요. (잘못입력시 재입력)       보유골드: {_player.Gold}G");
+                Console.WriteLine($"1. 전염률 증가({_player.GoldUpInfectRate}G): ");
+                Console.WriteLine($"2. 치사율 증가({_player.GoldUpFatalityRate}G): ");
                 Console.WriteLine("3. 스킬 사용");
                 Console.WriteLine("4. 다음 날로 넘어가기");
                 Console.WriteLine("---------------------------------------------------------------------------------");
@@ -166,16 +169,17 @@ namespace TheEpidemic
             switch (_numEpidemic)
             {
                 case 1:
-                    player.UpInfectRate();
+                    _player.UpInfectRate();
                     break;
                 case 2:
-                    player.UpFatalityRate();
+                    _player.UpFatalityRate();
                     break;
                 case 3:
-                    player.UseSkill();
+                    _player.UseSkill();
                     break;
                 case 4:
-                    player.Next(_gameManager);
+                    _player.Next(_gameManager);
+                    _global.UpCure();
                     break;
             }
         }
