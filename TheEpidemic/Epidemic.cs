@@ -34,7 +34,7 @@ namespace TheEpidemic
         {
             if(IsSkill == false)
             {
-                InfectRate += 10;
+                InfectRate *= 2;
             }
         }
 
@@ -60,7 +60,7 @@ namespace TheEpidemic
         {
             if (IsSkill == false)
             {
-                this.FatalityRate += 10;
+                this.FatalityRate *= 2;
             }
         }
 

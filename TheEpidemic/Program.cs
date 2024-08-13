@@ -4,28 +4,39 @@
     {
         static void Main(string[] args)
         {
-            // 초기화.
-            IGameManager gameManager = new GameManager();
-            IEpidemicFactory epidemicFactory = new BacteriaFactory();
-            IEpidemic epidemic = epidemicFactory.Create(1);
-
-            ISceneFactory sceneFactory = new FirstSceneFactory();
-            IScene scene1 = sceneFactory.CreateScene();
-
-            ISceneFactory sceneFactory2 = new ChoiceSceneFactory();
-            IScene scene2 = sceneFactory.CreateScene();
-
-            ISceneFactory sceneFactory3 = new GameSceneFactory();
-            IScene scene3 = sceneFactory.CreateScene();
-
-
+            IGameManager gameManager;
+            IEpidemicFactory epidemicFactory;
+            IEpidemic epidemic;
+            ISceneFactory sceneFactory;
+            IScene scene;
             IScene[] scenes = new IScene[3];
-            scenes[0] = scene1;
-            scenes[1] = scene2;
-            scenes[2] = scene3;
+
+            // 초기화.
+            gameManager = new GameManager();
+
+            epidemicFactory = new BacteriaFactory();
+            epidemic = epidemicFactory.Create(1);
+            gameManager.Epidemics.Add(epidemic);
+
+            epidemicFactory = new VirusFactory();
+            epidemic = epidemicFactory.Create(2);
+            gameManager.Epidemics.Add(epidemic);
+
+            sceneFactory = new FirstSceneFactory();
+            scene = sceneFactory.CreateScene();
+            scenes[0] = scene;
+
+            sceneFactory = new ChoiceSceneFactory();
+            scene = sceneFactory.CreateScene();
+            scenes[1] = scene;
+
+            sceneFactory = new GameSceneFactory();
+            scene = sceneFactory.CreateScene();
+            scenes[2] = scene;
+
 
             int sceneNum = 1;
-            while(sceneNum <= 3)
+            while (sceneNum <= 3)
             {
                 if (scenes[sceneNum] is IAwake)
                 {
