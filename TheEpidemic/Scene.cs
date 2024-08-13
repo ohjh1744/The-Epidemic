@@ -26,6 +26,7 @@ namespace TheEpidemic
         private bool _finishScene = false;
         public void Render()
         {
+            Console.Clear();
             Console.WriteLine("#######################################");
             Console.WriteLine("#        전염병 퍼트리기              #");
             Console.WriteLine("#                                     #");
@@ -61,6 +62,7 @@ namespace TheEpidemic
         }
         public void Render()
         {
+            Console.Clear();
             Console.WriteLine("#################################");
             Console.WriteLine("#          전염병 선택          #");
             Console.WriteLine("#################################");
@@ -73,7 +75,6 @@ namespace TheEpidemic
             Console.WriteLine("전염률: 20");
             Console.WriteLine("치사률:  5");
             Console.WriteLine("스킬:  이틀동안 전염률 두 배 상승");
-
             Console.WriteLine("#################################");
             Console.WriteLine("원하는 전염병을 선택해주세요.(잘못입력시 재입력)");
         }
@@ -89,7 +90,6 @@ namespace TheEpidemic
         public void Update()
         {
             _gameManager.Epidemic = _gameManager.Epidemics[_numEpidemic-1];
-            Console.WriteLine(_gameManager.Epidemic);
             FinishScene = true;
         }
         public bool FinishScene { get { return _finishScene; } set { _finishScene = value; } }
@@ -108,12 +108,29 @@ namespace TheEpidemic
         }
         public void Render()
         {
+            Console.Clear();
+            for (int i = 0; i < 20; i++)
+            {
+                for(int j = 0; j < 30; j++)
+                {
+                    if (_gameManager.Map[i,j] == 0)
+                    {
+                        Console.Write("□");
+                    }
+                    else if (_gameManager.Map[i,j] == 1)
+                    {
+                        Console.Write("■");
+                    }
+                }
+                Console.WriteLine();
+            }
             _gameManager.Show();
+
         }
 
         public void Input()
         {
-
+            Console.ReadLine();
         }
 
         public void Update()

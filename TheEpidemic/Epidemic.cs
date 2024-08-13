@@ -12,6 +12,7 @@ namespace TheEpidemic
         private int _infectRate;
         private int _fatalityRate;
         private bool _isSkill;
+
         
         public string Name { get { return _name; } set { _name = value; } }
         public int InfectRate { get { return _infectRate; } set { _infectRate = value; } }
