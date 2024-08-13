@@ -29,6 +29,11 @@ namespace TheEpidemic
         private int _infected;
         private int _death;
 
+        public GameManager()
+        {
+            _epidemics = new List<IEpidemic>();
+        }
+
         public List<IEpidemic> Epidemics { get { return _epidemics; } set { _epidemics = value; } }
         public IEpidemic Epidemic { get { return _epidemic; } set { _epidemic = value; } }
         public IGlobal Global { get { return _global; } set { _global = value; } }

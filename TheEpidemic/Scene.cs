@@ -18,7 +18,7 @@ namespace TheEpidemic
 
     public interface IAwake
     {
-        public void Awake(IGameManager gameManager, IEpidemic epidemic);
+        public void Awake(IGameManager gameManager);
     }
 
     public class FirstScene : IScene
@@ -42,6 +42,7 @@ namespace TheEpidemic
         public void Update()
         {
             FinishScene = true;
+            Console.WriteLine("트루!");
         }
 
        public bool FinishScene{ get { return _finishScene; } set{ _finishScene = value; } }
@@ -55,10 +56,9 @@ namespace TheEpidemic
         private IGameManager _gameManager;
         private int _numEpidemic;
 
-        public void Awake(IGameManager gameManager, IEpidemic epidemic)
+        public void Awake(IGameManager gameManager)
         {
             _gameManager = gameManager;
-            _epidemic = epidemic;
         }
         public void Render()
         {
@@ -98,7 +98,7 @@ namespace TheEpidemic
     public class GameScene : IScene, IAwake
     {
         private bool _finishScene = false;
-        public void Awake(IGameManager gameManager, IEpidemic epidemic)
+        public void Awake(IGameManager gameManager)
         {
 
         }

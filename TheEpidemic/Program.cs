@@ -15,11 +15,11 @@
             gameManager = new GameManager();
 
             epidemicFactory = new BacteriaFactory();
-            epidemic = epidemicFactory.Create(1);
+            epidemic = epidemicFactory.Create();
             gameManager.Epidemics.Add(epidemic);
 
             epidemicFactory = new VirusFactory();
-            epidemic = epidemicFactory.Create(2);
+            epidemic = epidemicFactory.Create();
             gameManager.Epidemics.Add(epidemic);
 
             sceneFactory = new FirstSceneFactory();
@@ -35,12 +35,12 @@
             scenes[2] = scene;
 
 
-            int sceneNum = 1;
-            while (sceneNum <= 3)
+            int sceneNum = 0;
+            while (sceneNum <= 2)
             {
                 if (scenes[sceneNum] is IAwake)
                 {
-                    (scenes[sceneNum] as IAwake).Awake(gameManager, epidemic);
+                    (scenes[sceneNum] as IAwake).Awake(gameManager);
                 }
                 while (scenes[sceneNum].FinishScene == false)
                 {
@@ -48,6 +48,7 @@
                     scenes[sceneNum].Input();
                     scenes[sceneNum].Update();
                 }
+                sceneNum++;
             }
 
 
