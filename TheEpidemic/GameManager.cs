@@ -32,6 +32,11 @@ namespace TheEpidemic
         public GameManager()
         {
             _epidemics = new List<IEpidemic>();
+            _epidemic = new Virus();
+            _global = new Global();
+            _map = new int[50, 50];
+            _infected = 0;
+            _death = 0;
         }
 
         public List<IEpidemic> Epidemics { get { return _epidemics; } set { _epidemics = value; } }
@@ -42,7 +47,11 @@ namespace TheEpidemic
         public int Death { get { return _death; } set { _death = value; } }
         public void Show()
         {
-           
+            Console.WriteLine($"전염병: {Epidemic.Name}");
+            Console.WriteLine($"전염률: {Epidemic.InfectRate}");
+            Console.WriteLine($"치사율: {Epidemic.FatalityRate}");
+            Console.WriteLine($"전염수: {Infected}");
+            Console.WriteLine($"사망수: {Death}");
         }
     }
 }

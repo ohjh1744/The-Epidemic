@@ -42,7 +42,6 @@ namespace TheEpidemic
         public void Update()
         {
             FinishScene = true;
-            Console.WriteLine("트루!");
         }
 
        public bool FinishScene{ get { return _finishScene; } set{ _finishScene = value; } }
@@ -65,15 +64,16 @@ namespace TheEpidemic
             Console.WriteLine("#################################");
             Console.WriteLine("#          전염병 선택          #");
             Console.WriteLine("#################################");
-            Console.WriteLine("1. 바이러스");
-            Console.WriteLine("전염률: 20");
-            Console.WriteLine("치사률:  5");
-            Console.WriteLine("스킬:  이틀동안 전염률 두 배 상승");
-            Console.WriteLine("#################################");
-            Console.WriteLine("2. 박테리아");
+            Console.WriteLine("1. 박테리아");
             Console.WriteLine("전염률: 10");
             Console.WriteLine("치사률: 10");
             Console.WriteLine("스킬:  이틀동안 치사율 두 배 상승");
+            Console.WriteLine("#################################");
+            Console.WriteLine("2. 바이러스");
+            Console.WriteLine("전염률: 20");
+            Console.WriteLine("치사률:  5");
+            Console.WriteLine("스킬:  이틀동안 전염률 두 배 상승");
+
             Console.WriteLine("#################################");
             Console.WriteLine("원하는 전염병을 선택해주세요.(잘못입력시 재입력)");
         }
@@ -88,7 +88,8 @@ namespace TheEpidemic
 
         public void Update()
         {
-            _gameManager.Epidemic = _gameManager.Epidemics[_numEpidemic];
+            _gameManager.Epidemic = _gameManager.Epidemics[_numEpidemic-1];
+            Console.WriteLine(_gameManager.Epidemic);
             FinishScene = true;
         }
         public bool FinishScene { get { return _finishScene; } set { _finishScene = value; } }
@@ -98,13 +99,16 @@ namespace TheEpidemic
     public class GameScene : IScene, IAwake
     {
         private bool _finishScene = false;
+        private IGameManager _gameManager;
+        private int _numInput;
+
         public void Awake(IGameManager gameManager)
         {
-
+            _gameManager = gameManager;
         }
         public void Render()
         {
-
+            _gameManager.Show();
         }
 
         public void Input()

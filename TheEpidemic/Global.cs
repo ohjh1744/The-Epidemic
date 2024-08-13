@@ -12,7 +12,7 @@ namespace TheEpidemic
         int Cure { get; set; }
     }
 
-    public class Global
+    public class Global: IGlobal
     {
         int _cure = 0;
 
