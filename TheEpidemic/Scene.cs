@@ -68,14 +68,14 @@ namespace TheEpidemic
             Console.WriteLine("#          전염병 선택          #");
             Console.WriteLine("#################################");
             Console.WriteLine("1. 박테리아");
-            Console.WriteLine("전염률: 10");
-            Console.WriteLine("치사률: 10");
-            Console.WriteLine("스킬:  이틀동안 치사율 두 배 상승");
+            Console.WriteLine("전염률: 3");
+            Console.WriteLine("치사률: 2");
+            Console.WriteLine("스킬:  이틀동안 치사율 두 배 상승, 쿨타임: 3일");
             Console.WriteLine("#################################");
             Console.WriteLine("2. 바이러스");
-            Console.WriteLine("전염률: 20");
-            Console.WriteLine("치사률:  5");
-            Console.WriteLine("스킬:  이틀동안 전염률 두 배 상승");
+            Console.WriteLine("전염률: 5");
+            Console.WriteLine("치사률: 1");
+            Console.WriteLine("스킬:  이틀 동안 전염률 두 배 상승, 쿨타임: 3일");
             Console.WriteLine("#################################");
             Console.WriteLine("원하는 전염병을 선택해주세요.(잘못입력시 재입력)");
         }
@@ -151,11 +151,14 @@ namespace TheEpidemic
         {
             do
             {
-                Console.WriteLine("하고 싶은 행동을 고르세요. (잘못입력시 재입력)");
-                Console.WriteLine("1. 전염률 증가: ");
-                Console.WriteLine("2. 치사율 증가: ");
-                Console.WriteLine("3. 다음 날로 넘어가기");
-            } while (int.TryParse(Console.ReadLine(), out _numEpidemic) == false || _numEpidemic < 0 || _numEpidemic > 3);
+                Console.WriteLine("---------------------------------------------------------------------------------");
+                Console.WriteLine($"하고 싶은 행동을 고르세요. (잘못입력시 재입력)       보유골드: {player.Gold}G");
+                Console.WriteLine($"1. 전염률 증가({player.GoldUpInfectRate}G): ");
+                Console.WriteLine($"2. 치사율 증가({player.GoldUpFatalityRate}G): ");
+                Console.WriteLine("3. 스킬 사용");
+                Console.WriteLine("4. 다음 날로 넘어가기");
+                Console.WriteLine("---------------------------------------------------------------------------------");
+            } while (int.TryParse(Console.ReadLine(), out _numEpidemic) == false || _numEpidemic < 0 || _numEpidemic > 4);
         }
 
         public void Update()
@@ -169,9 +172,10 @@ namespace TheEpidemic
                     player.UpFatalityRate();
                     break;
                 case 3:
-                    player.Next(_gameManager);
+                    player.UseSkill();
                     break;
-                default:
+                case 4:
+                    player.Next(_gameManager);
                     break;
             }
         }

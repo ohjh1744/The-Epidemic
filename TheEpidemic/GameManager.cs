@@ -77,6 +77,7 @@ namespace TheEpidemic
         public void Show()
         {
             Console.WriteLine($"-------------------------------");
+            Console.WriteLine($"Day: {Day}");
             Console.WriteLine($"전염병: {Epidemic.Name}");
             Console.WriteLine($"전염률: {Epidemic.InfectRate}");
             Console.WriteLine($"치사율: {Epidemic.FatalityRate}");

@@ -8,7 +8,7 @@
         int GoldUpFatalityRate { get; set; }
         void UpInfectRate();
         void UpFatalityRate();
-
+        void UseSkill();
         void Next(IGameManager gameManager);
         void BfsStart(IGameManager gameManager);
 
@@ -17,16 +17,16 @@
 
     public class Player : IPlayer
     {
-
         private int _gold;
         private int _goldUpInfectRate;
         private int _glodUpFatalityRate;
         private Epidemic _epidemic;
+        public event Action skill;
         public Player(Epidemic epidemic)
         {
             _gold = 0;
-            _goldUpInfectRate = 10;
-            _glodUpFatalityRate = 10;
+            _goldUpInfectRate = 20;
+            _glodUpFatalityRate = 20;
             _epidemic = epidemic;
 
         }
@@ -41,36 +41,59 @@
         {
             if (Gold >= GoldUpInfectRate)
             {
-                _epidemic.InfectRate += 10;
+                _epidemic.InfectRate += 5;
                 Gold -= GoldUpInfectRate;
+                GoldUpInfectRate += 20;
             }
             else
             {
                 Console.WriteLine("돈이 부족해 강화를 할수가 없습니다.");
             }
-            GoldUpInfectRate += 5;
         }
 
         public void UpFatalityRate()
         {
-            if (Gold >= GoldUpInfectRate)
+            if (Gold >= GoldUpFatalityRate)
             {
-                _epidemic.FatalityRate += 10;
-                Gold -= GoldUpInfectRate;
+                _epidemic.FatalityRate += 5;
+                Gold -= GoldUpFatalityRate;
+                GoldUpFatalityRate += 20;
             }
             else
             {
                 Console.WriteLine("돈이 부족해 강화를 할수가 없습니다.");
             }
-            GoldUpFatalityRate += 5;
         }
 
+        public void UseSkill()
+        {
+            if(Epidemic.BuffTime == 0)
+            {
+                Epidemic.Buff();
+            }
+            else
+            {
+                Console.WriteLine($"아직 {Epidemic.BuffTime}일 지나야합니다.");
+            }
+        }
         public void Next(IGameManager gameManager)
         {
             BfsStart(gameManager);
             gameManager.Day++;
-
+            if(Epidemic.IsBuff == true)
+            {
+                if (Epidemic.BuffDuration > 0)
+                {
+                    Epidemic.BuffDuration--;
+                }
+                else if (Epidemic.BuffDuration == 0)
+                {
+                    Epidemic.DeBuff();
+                }
+                Epidemic.BuffTime--;
+            }
         }
+
 
         public void BfsStart(IGameManager gameManager)
         {
@@ -133,6 +156,7 @@
             {
                 map[y, x] = visitNum+1;
                 visited[y, x] = true;
+                Gold += 1;
             }
 
             while (q.Count != 0)
@@ -158,6 +182,7 @@
                         {
                             map[ny, nx] = visitNum+1;
                             visited[ny, nx] = true;
+                            Gold += 1;
                         }
                     }
                 }

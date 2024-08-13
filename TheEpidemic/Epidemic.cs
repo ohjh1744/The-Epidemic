@@ -12,15 +12,22 @@ namespace TheEpidemic
         private string _name;
         private int _infectRate;
         private int _fatalityRate;
-        private bool _isSkill;
+        private int _buffTime;
+        private int _buffDuration;
+        private bool _isBuff;
+
 
         
         public string Name { get { return _name; } set { _name = value; } }
         public int InfectRate { get { return _infectRate; } set { _infectRate = value; } }
         public int FatalityRate { get { return _fatalityRate; } set { _fatalityRate = value; } }
-        public bool IsSkill { get { return _isSkill; } set { _isSkill = value; } }
+        public int BuffTime { get { return _buffTime; } set { _buffTime = value; } }
+        public int BuffDuration { get { return _buffDuration; } set { _buffDuration = value; } }
+        public bool IsBuff { get { return _isBuff; } set { _isBuff = value; } }
 
-        public abstract void UseSkill();
+        public abstract void Buff();
+
+        public abstract void DeBuff();
 
 
     }
@@ -32,23 +39,31 @@ namespace TheEpidemic
         public Virus()
         {
             Name = "바이러스";
-            InfectRate = 20;
-            FatalityRate = 5;
-            IsSkill = false;
+            InfectRate = 5;
+            FatalityRate = 1;
+            BuffTime = 0;
+            BuffDuration = 2;
+            IsBuff = false;
         }
         
 
         public void EnforceSkill()
         {
-            if(IsSkill == false)
-            {
-                InfectRate *= 2;
-            }
+            InfectRate *= 2;
+            BuffTime = 3;
         }
 
-        public override void UseSkill()
+        public override void Buff()
         {
+            IsBuff = true;
             EnforceSkill();
+        }
+
+        public override void DeBuff()
+        {
+            IsBuff = false;
+            InfectRate /= 2;
+            BuffDuration = 2;
         }
 
 
@@ -59,23 +74,30 @@ namespace TheEpidemic
         public Bacteria()
         {
             Name = "박테리아";
-            InfectRate = 10;
-            FatalityRate = 10;
-            IsSkill = false;
+            InfectRate = 3;
+            FatalityRate = 2;
+            BuffTime = 0;
+            BuffDuration = 2;
         }
 
 
         public void EnforceSkill()
         {
-            if (IsSkill == false)
-            {
-                this.FatalityRate *= 2;
-            }
+            FatalityRate *= 2;
+            BuffTime = 3;
         }
 
-        public override void UseSkill()
+        public override void Buff()
         {
+            IsBuff = true;
             EnforceSkill();
+        }
+
+        public override void DeBuff()
+        {
+            IsBuff = false;
+            FatalityRate /= 2;
+            BuffDuration = 2;
         }
 
     }
