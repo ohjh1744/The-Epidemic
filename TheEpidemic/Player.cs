@@ -2,12 +2,11 @@
 {
     public interface IPlayer
     {
-        void UpInfectRate();
-        void UpFatalityRate();
+        void UpdateInfectRate();
+        void UpdateFatalityRate();
         void UseSkill();
         void Next();
         void FindSurvivor();
-
     }
 
 
@@ -18,27 +17,26 @@
         {
             _gameManager = gameManager;
         }
-        public void UpInfectRate()
+        public void UpdateInfectRate()
         {
             if (_gameManager.Gold >= _gameManager.UpgradeGoldForInfect)
             {
-                _gameManager.Epidemic.InfectRate += 5;
-                _gameManager.Gold -= _gameManager.UpgradeGoldForInfect;
-                _gameManager.UpgradeGoldForInfect += 20;
+                _gameManager.Update += UpInfectRate;
+                _gameManager.Update += UseGoldForInfect;
+                _gameManager.Update += UpgradeGoldForInfect;
             }
             else
             {
                 Console.WriteLine("돈이 부족해 강화를 할수가 없습니다.");
             }
         }
-
-        public void UpFatalityRate( )
+        public void UpdateFatalityRate( )
         {
             if (_gameManager.Gold >= _gameManager.UpgradeGoldForFatality)
             {
-                _gameManager.Epidemic.FatalityRate += 5;
-                _gameManager.Gold -= _gameManager.UpgradeGoldForFatality;
-                _gameManager.UpgradeGoldForFatality += 20;
+                _gameManager.Update += UpFatalityRate;
+                _gameManager.Update += UseGoldForFatalityRate;
+                _gameManager.Update += UpgradeGoldForFatality;
             }
             else
             {
@@ -60,12 +58,12 @@
         public void Next( )
         {
             FindSurvivor();
-            _gameManager.Day++;
+            _gameManager.Update += IncreaseDay;
             if(_gameManager.Epidemic.IsBuff == true)
             {
                 if (_gameManager.Epidemic.BuffDuration > 0)
                 {
-                    _gameManager.Epidemic.BuffDuration--;
+                    _gameManager.Update += DecreaseBuffDuration;
                 }
                 else if (_gameManager.Epidemic.BuffDuration == 0)
                 {
@@ -73,9 +71,53 @@
                 }
             }
             if (_gameManager.Epidemic.BuffWaitTime != 0){
-                _gameManager.Epidemic.BuffWaitTime--;
+                _gameManager.Update += DecreaseBuffWaitTime;
             }
 
+        }
+        public void UpInfectRate()
+        {
+            _gameManager.Epidemic.InfectRate += 5;
+        }
+
+        public void UseGoldForInfect()
+        {
+            _gameManager.Gold -= _gameManager.UpgradeGoldForInfect;
+        }
+
+        public void UpgradeGoldForInfect()
+        {
+            _gameManager.UpgradeGoldForInfect += 20;
+        }
+
+        public void UpFatalityRate()
+        {
+            _gameManager.Epidemic.FatalityRate += 5;
+        }
+
+        public void UseGoldForFatalityRate()
+        {
+            _gameManager.Gold -= _gameManager.UpgradeGoldForFatality;
+        }
+
+        public void UpgradeGoldForFatality()
+        {
+            _gameManager.UpgradeGoldForFatality += 20;
+        }
+
+        public void IncreaseDay()
+        {
+            _gameManager.Day++;
+        }
+
+        public void DecreaseBuffDuration()
+        {
+            _gameManager.Epidemic.BuffDuration--;
+        }
+
+        public void DecreaseBuffWaitTime()
+        {
+            _gameManager.Epidemic.BuffWaitTime--;
         }
 
 

@@ -1,4 +1,5 @@
 ﻿using TheEpidemic;
+using System.Text;
 
 namespace TheEpidemic
 {
@@ -26,9 +27,12 @@ namespace TheEpidemic
         int Gold { get; set; }
         int UpgradeGoldForInfect { get; set; }
         int UpgradeGoldForFatality { get; set; }
+        event Action Update;
+        void StartUpdate();
         // 상태 출력
         void Show();
         void Reset();
+
 
     }
 
@@ -46,6 +50,9 @@ namespace TheEpidemic
         private int _gold;
         private int _upgradeGoldForInfect;
         private int _upgradeGoldForFatality;
+
+        public event Action Update;
+
 
 
 
@@ -96,6 +103,7 @@ namespace TheEpidemic
             _gold = 0;
             _upgradeGoldForInfect = 20;
             _upgradeGoldForFatality = 20;
+
         }
 
         public List<Epidemic> Epidemics { get { return _epidemics; } set { _epidemics = value; } }
@@ -120,7 +128,11 @@ namespace TheEpidemic
             Console.WriteLine($"치료제 개발율: {_global.Cure}");
             Console.WriteLine($"----------------------------------------------------------");
         }
-
+        public void StartUpdate()
+        {
+            Update?.Invoke();
+            Update = null;
+        }
         public void Reset()
         {
             _infected = 0;

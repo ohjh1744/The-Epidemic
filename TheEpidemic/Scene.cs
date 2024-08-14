@@ -144,6 +144,7 @@ namespace TheEpidemic
                 Console.WriteLine();
             }
             _global.FindEpidemic(_gameManager);
+            //여기부분을 News
             _gameManager.Show();
 
         }
@@ -167,10 +168,10 @@ namespace TheEpidemic
             switch (_numInput)
             {
                 case 1:
-                    _player.UpInfectRate();
+                    _player.UpdateInfectRate();
                     break;
                 case 2:
-                    _player.UpFatalityRate();
+                    _player.UpdateFatalityRate();
                     break;
                 case 3:
                     _player.UseSkill();
@@ -180,6 +181,7 @@ namespace TheEpidemic
                     _global.DevelopRemedy();
                     break;
             }
+            _gameManager.StartUpdate();
             GameFinish();
         }
 
