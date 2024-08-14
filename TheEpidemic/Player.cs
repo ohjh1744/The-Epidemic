@@ -187,7 +187,7 @@
 
         public void UpInfectRate()
         {
-            _gameManager.Epidemic.InfectRate += 10;
+            _gameManager.Epidemic.InfectRate += 5;
         }
 
         public void UseGoldForInfect()
@@ -202,7 +202,7 @@
 
         public void UpFatalityRate()
         {
-            _gameManager.Epidemic.FatalityRate += 10;
+            _gameManager.Epidemic.FatalityRate += 5;
         }
 
         public void UseGoldForFatalityRate()
