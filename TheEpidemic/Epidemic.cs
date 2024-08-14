@@ -47,7 +47,7 @@ namespace TheEpidemic
         }
         
 
-        public void EnforceSkill()
+        private void EnforceSkill()
         {
             InfectRate *= 2;
             BuffWaitTime = 4;
@@ -83,7 +83,7 @@ namespace TheEpidemic
         }
 
 
-        public void EnforceSkill()
+        private void EnforceSkill()
         {
             FatalityRate *= 2;
             BuffWaitTime = 4;
