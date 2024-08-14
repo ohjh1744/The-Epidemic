@@ -35,7 +35,7 @@
             if (_gameManager.Gold >= _gameManager.UpgradeGoldForFatality)
             {
                 _gameManager.Update += UpFatalityRate;
-                _gameManager.Update += UseGoldForFatalityRate;
+                _gameManager.Update += UseGoldForFatality;
                 _gameManager.Update += UpgradeGoldForFatality;
             }
             else
@@ -205,7 +205,7 @@
             _gameManager.Epidemic.FatalityRate += 5;
         }
 
-        public void UseGoldForFatalityRate()
+        public void UseGoldForFatality()
         {
             _gameManager.Gold -= _gameManager.UpgradeGoldForFatality;
         }
