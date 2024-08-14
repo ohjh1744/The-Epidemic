@@ -6,6 +6,8 @@ namespace TheEpidemic
     //게임의 모든 데이터들을 관리하고 보여주는 관리자 인터페이스 
     public interface IGameManager
     {
+        //상태 업데이트
+        event Action Update;
         //전염병 종류
         List<Epidemic> Epidemics { get; set; }
         // Player가 고른 전염병
@@ -27,7 +29,6 @@ namespace TheEpidemic
         int Gold { get; set; }
         int UpgradeGoldForInfect { get; set; }
         int UpgradeGoldForFatality { get; set; }
-        event Action Update;
         void StartUpdate();
         // 상태 출력
         void Show();
@@ -38,6 +39,7 @@ namespace TheEpidemic
 
     public class GameManager : IGameManager
     {
+        public event Action Update;
         private List<Epidemic> _epidemics;
         private Epidemic _epidemic;
         private IGlobal _global;
@@ -51,7 +53,6 @@ namespace TheEpidemic
         private int _upgradeGoldForInfect;
         private int _upgradeGoldForFatality;
 
-        public event Action Update;
 
 
 
