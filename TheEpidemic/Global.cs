@@ -7,16 +7,8 @@ using System.Threading.Tasks;
 
 namespace TheEpidemic
 {
-    public interface IGlobal
-    {
-        int Cure { get; set; }
-        int DevelopRate { get; set; }
-        
-        void DevelopRemedy();
-        void FindEpidemic(IGameManager gameManager);
-    }
 
-    public class Global : IGlobal
+    public class Global 
     {
         int _cure = 0;
         int _developRate = 0;

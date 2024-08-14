@@ -13,7 +13,7 @@ namespace TheEpidemic
         // Player가 고른 전염병
         Epidemic Epidemic { get; set; }
         //Global
-        IGlobal Global { get; set; }
+        Global Global { get; set; }
         //맵 상태 1: 전염, 2: 죽음
         int[,] Map { get; set; }
         // 현재 전염수
@@ -42,7 +42,7 @@ namespace TheEpidemic
         public event Action Update;
         private List<Epidemic> _epidemics;
         private Epidemic _epidemic;
-        private IGlobal _global;
+        private Global _global;
         private int[,] _map;
         private int _infected;
         private int _death;
@@ -109,7 +109,7 @@ namespace TheEpidemic
 
         public List<Epidemic> Epidemics { get { return _epidemics; } set { _epidemics = value; } }
         public Epidemic Epidemic { get { return _epidemic; } set { _epidemic = value; } }
-        public IGlobal Global { get { return _global; } set { _global = value; } }
+        public Global Global { get { return _global; } set { _global = value; } }
         public int[,] Map { get { return _map; } set { _map = value; } }
         public int Infected { get { return _infected; } set { _infected = value; } }
         public int Death { get { return _death; } set { _death = value; } }
