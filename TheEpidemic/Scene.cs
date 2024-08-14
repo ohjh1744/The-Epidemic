@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TheEpidemic
+﻿namespace TheEpidemic
 {
     public abstract class Scene
     {
@@ -50,7 +43,7 @@ namespace TheEpidemic
 
     }
 
-    public class ChoiceScene: Scene, IAwake
+    public class ChoiceScene : Scene, IAwake
     {
         private IGameManager _gameManager;
         private int _numEpidemic;
@@ -75,7 +68,7 @@ namespace TheEpidemic
             Console.WriteLine($"2. {_gameManager.Epidemics[1].Name}              ");
             Console.WriteLine($"전염률: {_gameManager.Epidemics[1].InfectRate}   ");
             Console.WriteLine($"치사률: {_gameManager.Epidemics[1].FatalityRate} ");
-            Console.WriteLine($"스킬:  이틀동안 치사율 두 배 상승                ");
+            Console.WriteLine($"스킬:  이틀동안 전염률 두 배 상승                ");
             Console.WriteLine($"쿨타임:  {_gameManager.Epidemics[1].BuffWaitTime}");
             Console.WriteLine($"지속시간:{_gameManager.Epidemics[1].BuffDuration}");
             Console.WriteLine("#####################################################");
@@ -90,7 +83,7 @@ namespace TheEpidemic
 
         public override void Update()
         {
-            _gameManager.Epidemic = _gameManager.Epidemics[_numEpidemic-1];
+            _gameManager.Epidemic = _gameManager.Epidemics[_numEpidemic - 1];
             FinishScene = true;
         }
 
@@ -114,13 +107,13 @@ namespace TheEpidemic
             Console.Clear();
             for (int i = 0; i < 20; i++)
             {
-                for(int j = 0; j < 30; j++)
+                for (int j = 0; j < 30; j++)
                 {
-                    if (_gameManager.Map[i,j] == 0)
+                    if (_gameManager.Map[i, j] == 0)
                     {
                         Console.Write("□");
                     }
-                    else if (_gameManager.Map[i,j] == 1)
+                    else if (_gameManager.Map[i, j] == 1)
                     {
                         Console.Write("■");
                     }
@@ -139,7 +132,7 @@ namespace TheEpidemic
                 }
                 Console.WriteLine();
             }
-  
+
             _global.FindEpidemic(_gameManager);
             _gameManager.Show();
             _gameManager.Reset();
@@ -169,7 +162,7 @@ namespace TheEpidemic
                     break;
                 case 2:
                     _player.UpdateFatalityRate();
-                    break; 
+                    break;
                 case 3:
                     _player.UseSkill();
                     break;
@@ -184,18 +177,20 @@ namespace TheEpidemic
 
         public void GameFinish()
         {
-           if(_global.Cure >= 100)
-           {
-                if (_gameManager.Survivor <= 0)
-                {
-                    Console.WriteLine("전 세계 인구를 멸종시켰습니다. 축하드립니다!");
-                }
-                else
-                {
-                    Console.WriteLine("인구가 치료제를 완성시켰습니다. 패배했습니다.");
-                }
+
+            if (_global.Cure == 100)
+            {
+                Render();
+                Console.WriteLine("인구가 치료제를 완성시켰습니다. 패배.");
                 FinishScene = true;
             }
+            else if(_gameManager.Survivor == 0)
+            {
+                Render();
+                Console.WriteLine("인류를 멸종시켰습니다. 승리!");
+                FinishScene = true;
+            }
+
         }
 
     }
