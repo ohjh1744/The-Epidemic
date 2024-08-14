@@ -2,17 +2,10 @@
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static void ResetGameManager(IGameManager gameManager)
         {
-            IGameManager gameManager;
             IEpidemicFactory epidemicFactory;
             Epidemic epidemic;
-            ISceneFactory sceneFactory;
-            IScene scene;
-            IScene[] scenes = new IScene[3];
-
-            // 초기화.
-            gameManager = new GameManager();
 
             epidemicFactory = new BacteriaFactory();
             epidemic = epidemicFactory.Create();
@@ -21,6 +14,12 @@
             epidemicFactory = new VirusFactory();
             epidemic = epidemicFactory.Create();
             gameManager.Epidemics.Add(epidemic);
+        }
+        
+        static void ResetScenes(IScene[] scenes)
+        {
+            ISceneFactory sceneFactory;
+            IScene scene;
 
             sceneFactory = new FirstSceneFactory();
             scene = sceneFactory.CreateScene();
@@ -34,7 +33,10 @@
             scene = sceneFactory.CreateScene();
             scenes[2] = scene;
 
+        }
 
+        static void PlayGame(IScene[] scenes, IGameManager gameManager)
+        {
             int sceneNum = 0;
             while (sceneNum <= 2)
             {
@@ -50,10 +52,16 @@
                 }
                 sceneNum++;
             }
+        }
 
+        static void Main(string[] args)
+        {
+            IGameManager gameManager = new GameManager();
+            IScene[] scenes = new IScene[3];
 
-
-
+            ResetGameManager(gameManager);
+            ResetScenes(scenes);
+            PlayGame(scenes, gameManager);
         }
     }
 }
