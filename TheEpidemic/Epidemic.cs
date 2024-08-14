@@ -40,7 +40,7 @@ namespace TheEpidemic
         {
             Name = "바이러스";
             InfectRate = 5;
-            FatalityRate = 1;
+            FatalityRate = 2;
             BuffWaitTime = 0;
             BuffDuration = 2;
             IsBuff = false;
@@ -75,10 +75,8 @@ namespace TheEpidemic
         {
             Name = "박테리아";
             InfectRate = 3;
-            FatalityRate = 2;
-            //쿨타임
+            FatalityRate = 4;
             BuffWaitTime = 0;
-            //지속시간
             BuffDuration = 2;
         }
 
@@ -104,7 +102,8 @@ namespace TheEpidemic
 
     }
 
-    
+
+
 
 
 }
