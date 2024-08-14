@@ -111,11 +111,13 @@
     {
         private Player _player;
         private Global _global;
+        private GameManager _gameManager;
         private int _numInput;
 
         public GameScene()
         {
             _global = new Global();
+            _gameManager = GameManager.Instance;
         }
         public void Awake(Player player)
         {
@@ -129,21 +131,21 @@
             {
                 for (int j = 0; j < 30; j++)
                 {
-                    if(GameManager.Instance.Map[i, j] == 0)
+                    if(_gameManager.Map[i, j] == 0)
                     {
                         Console.Write("□");
                     }
-                    else if (GameManager.Instance.Map[i, j] == 1)
+                    else if (_gameManager.Map[i, j] == 1)
                     {
                         Console.Write("■");
                     }
-                    else if (GameManager.Instance.Map[i, j] == 2)
+                    else if (_gameManager.Map[i, j] == 2)
                     {
                         Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.Write("■");
                         Console.ResetColor();
                     }
-                    else if (GameManager.Instance.Map[i, j] == 3)
+                    else if (_gameManager.Map[i, j] == 3)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write("■");
@@ -154,8 +156,8 @@
             }
 
             _global.FindEpidemic();
-            GameManager.Instance.Show();
-            GameManager.Instance.Reset();
+            _gameManager.Show();
+            _gameManager.Reset();
 
         }
 
@@ -164,9 +166,9 @@
             do
             {
                 Console.WriteLine("---------------------------------------------------------------------------------");
-                Console.WriteLine($"하고 싶은 행동을 고르세요. (잘못입력시 재입력)       보유골드: {GameManager.Instance.Gold}G");
-                Console.WriteLine($"1. 전염률 증가({GameManager.Instance.UpgradeGoldForInfect}G): ");
-                Console.WriteLine($"2. 치사율 증가({GameManager.Instance.UpgradeGoldForFatality}G): ");
+                Console.WriteLine($"하고 싶은 행동을 고르세요. (잘못입력시 재입력)       보유골드: {_gameManager.Gold}G");
+                Console.WriteLine($"1. 전염률 증가({_gameManager.UpgradeGoldForInfect}G): ");
+                Console.WriteLine($"2. 치사율 증가({_gameManager.UpgradeGoldForFatality}G): ");
                 Console.WriteLine($"3. 스킬 사용 (쿨타임 {_player.Epidemic.BuffWaitTime}일 남았습니다.)");
                 Console.WriteLine("4. 다음 날로 넘어가기");
                 Console.WriteLine("---------------------------------------------------------------------------------");
@@ -191,20 +193,20 @@
                     _global.DevelopRemedy();
                     break;
             }
-            GameManager.Instance.StartUpdate();
+            _gameManager.StartUpdate();
             GameFinish();
         }
 
         public void GameFinish()
         {
 
-            if (GameManager.Instance.Cure >= 100)
+            if (_gameManager.Cure >= 100)
             {
                 Render();
                 Console.WriteLine("인구가 치료제를 완성시켰습니다. 패배.");
                 FinishScene = true;
             }
-            else if(GameManager.Instance.Survivor == 0)
+            else if(_gameManager.Survivor == 0)
             {
                 Render();
                 Console.WriteLine("인류를 멸종시켰습니다. 승리!");
