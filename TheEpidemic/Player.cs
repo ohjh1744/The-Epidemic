@@ -2,13 +2,12 @@
 {
     public interface IPlayer
     {
-        Epidemic Epidemic { get; set; }
         int Gold { get; set; }
         int GoldUpInfectRate { get; set; }
         int GoldUpFatalityRate { get; set; }
-        void UpInfectRate();
-        void UpFatalityRate();
-        void UseSkill();
+        void UpInfectRate(IGameManager gameManager);
+        void UpFatalityRate(IGameManager gameManager);
+        void UseSkill(IGameManager gameManager);
         void Next(IGameManager gameManager);
         void BfsStart(IGameManager gameManager);
 
@@ -20,28 +19,24 @@
         private int _gold;
         private int _goldUpInfectRate;
         private int _glodUpFatalityRate;
-        private Epidemic _epidemic;
-        public event Action skill;
-        public Player(Epidemic epidemic)
+  
+        public Player()
         {
             _gold = 0;
             _goldUpInfectRate = 20;
             _glodUpFatalityRate = 20;
-            _epidemic = epidemic;
-
         }
 
         public int Gold { get { return _gold; } set { _gold = value; } }
         public int GoldUpInfectRate { get { return _goldUpInfectRate; } set { _goldUpInfectRate = value; } }
         public int GoldUpFatalityRate { get { return _glodUpFatalityRate; } set { _glodUpFatalityRate = value; } }
 
-        public Epidemic Epidemic { get { return _epidemic; } set { _epidemic = value; } }
 
-        public void UpInfectRate()
+        public void UpInfectRate(IGameManager gameManager)
         {
             if (Gold >= GoldUpInfectRate)
             {
-                _epidemic.InfectRate += 5;
+                gameManager.Epidemic.InfectRate += 5;
                 Gold -= GoldUpInfectRate;
                 GoldUpInfectRate += 20;
             }
@@ -51,11 +46,11 @@
             }
         }
 
-        public void UpFatalityRate()
+        public void UpFatalityRate(IGameManager gameManager)
         {
             if (Gold >= GoldUpFatalityRate)
             {
-                _epidemic.FatalityRate += 5;
+                gameManager.Epidemic.FatalityRate += 5;
                 Gold -= GoldUpFatalityRate;
                 GoldUpFatalityRate += 20;
             }
@@ -65,34 +60,34 @@
             }
         }
 
-        public void UseSkill()
+        public void UseSkill(IGameManager gameManager)
         {
-            if(Epidemic.BuffWaitTime == 0)
+            if(gameManager.Epidemic.BuffWaitTime == 0)
             {
-                Epidemic.Buff();
+                gameManager.Epidemic.Buff();
             }
             else
             {
-                Console.WriteLine($"아직 {Epidemic.BuffWaitTime}일 지나야합니다.");
+                Console.WriteLine($"아직 {gameManager.Epidemic.BuffWaitTime}일 지나야합니다.");
             }
         }
         public void Next(IGameManager gameManager)
         {
             BfsStart(gameManager);
             gameManager.Day++;
-            if(Epidemic.IsBuff == true)
+            if(gameManager.Epidemic.IsBuff == true)
             {
-                if (Epidemic.BuffDuration > 0)
+                if (gameManager.Epidemic.BuffDuration > 0)
                 {
-                    Epidemic.BuffDuration--;
+                    gameManager.Epidemic.BuffDuration--;
                 }
-                else if (Epidemic.BuffDuration == 0)
+                else if (gameManager.Epidemic.BuffDuration == 0)
                 {
-                    Epidemic.DeBuff();
+                    gameManager.Epidemic.DeBuff();
                 }
             }
-            if (Epidemic.BuffWaitTime != 0){
-                Epidemic.BuffWaitTime--;
+            if (gameManager.Epidemic.BuffWaitTime != 0){
+                gameManager.Epidemic.BuffWaitTime--;
             }
 
         }
@@ -117,7 +112,7 @@
                 {
                     if (map[i, j] == 2 && visited[i, j] == false)
                     {
-                        InfectorKillBfs(i, j, 2, map, visited, Epidemic.FatalityRate);
+                        InfectorKillBfs(i, j, 2, map, visited, gameManager.Epidemic.FatalityRate);
                     }
                 }
             }
@@ -136,7 +131,7 @@
                 {
                     if (map[i, j] == 1 && visited[i, j] == false)
                     {
-                        InfectorKillBfs(i, j, 1, map, visited, Epidemic.InfectRate);
+                        InfectorKillBfs(i, j, 1, map, visited, gameManager.Epidemic.InfectRate);
                     }
                 }
             }

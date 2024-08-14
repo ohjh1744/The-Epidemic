@@ -110,7 +110,7 @@ namespace TheEpidemic
         public void Awake(IGameManager gameManager)
         {
             _gameManager = gameManager;
-            _player = new Player(gameManager.Epidemic);
+            _player = new Player();
             _global = gameManager.Global;
         }
         public void Render()
@@ -171,13 +171,13 @@ namespace TheEpidemic
             switch (_numInput)
             {
                 case 1:
-                    _player.UpInfectRate();
+                    _player.UpInfectRate(_gameManager);
                     break;
                 case 2:
-                    _player.UpFatalityRate();
+                    _player.UpFatalityRate(_gameManager);
                     break;
                 case 3:
-                    _player.UseSkill();
+                    _player.UseSkill(_gameManager);
                     break;
                 case 4:
                     _player.Next(_gameManager);
