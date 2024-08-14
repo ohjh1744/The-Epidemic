@@ -16,10 +16,10 @@
             gameManager.Epidemics.Add(epidemic);
         }
         
-        static void ResetScenes(IScene[] scenes)
+        static void ResetScenes(Scene[] scenes)
         {
             ISceneFactory sceneFactory;
-            IScene scene;
+            Scene scene;
 
             sceneFactory = new FirstSceneFactory();
             scene = sceneFactory.CreateScene();
@@ -35,7 +35,7 @@
 
         }
 
-        static void PlayGame(IScene[] scenes, IGameManager gameManager)
+        static void PlayGame(Scene[] scenes, IGameManager gameManager)
         {
             int sceneNum = 0;
             while (sceneNum <= 2)
@@ -57,7 +57,7 @@
         static void Main(string[] args)
         {
             IGameManager gameManager = new GameManager();
-            IScene[] scenes = new IScene[3];
+            Scene[] scenes = new Scene[3];
 
             ResetGameManager(gameManager);
             ResetScenes(scenes);

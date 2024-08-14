@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 
 namespace TheEpidemic
 {
-    public interface IScene
+    public abstract class Scene
     {
-        public void Render();
-        public  void Input();
-        public void Update();
-        public bool FinishScene { get; set; }
+        private bool _finishScene = false;
+        public abstract void Render();
+        public abstract void Input();
+        public abstract void Update();
+        public bool FinishScene { get { return _finishScene; } set { _finishScene = value; } }
 
     }
 
@@ -21,10 +22,9 @@ namespace TheEpidemic
         public void Awake(IGameManager gameManager);
     }
 
-    public class FirstScene : IScene
+    public class FirstScene : Scene
     {
-        private bool _finishScene = false;
-        public void Render()
+        public override void Render()
         {
             Console.Clear();
             Console.WriteLine("#######################################");
@@ -38,30 +38,28 @@ namespace TheEpidemic
 
         }
 
-        public void Input()
+        public override void Input()
         {
             Console.ReadLine();
         }
 
-        public void Update()
+        public override void Update()
         {
             FinishScene = true;
         }
 
-       public bool FinishScene{ get { return _finishScene; } set{ _finishScene = value; } }
     }
 
-    public class ChoiceScene:IScene, IAwake
+    public class ChoiceScene: Scene, IAwake
     {
         private IGameManager _gameManager;
-        private bool _finishScene = false;
         private int _numEpidemic;
 
         public void Awake(IGameManager gameManager)
         {
             _gameManager = gameManager;
         }
-        public void Render()
+        public override void Render()
         {
             Console.Clear();
             Console.WriteLine("#####################################################");
@@ -84,27 +82,25 @@ namespace TheEpidemic
             Console.WriteLine("원하는 전염병을 선택해주세요.(잘못입력시 재입력)");
         }
 
-        public void Input()
+        public override void Input()
         {
             do
             { } while (int.TryParse(Console.ReadLine(), out _numEpidemic) == false || _numEpidemic < 1 || _numEpidemic > 2);
         }
 
-        public void Update()
+        public override void Update()
         {
             _gameManager.Epidemic = _gameManager.Epidemics[_numEpidemic-1];
             FinishScene = true;
         }
-        public bool FinishScene { get { return _finishScene; } set { _finishScene = value; } }
 
     }
 
-    public class GameScene : IScene, IAwake
+    public class GameScene : Scene, IAwake
     {
         private IGameManager _gameManager;
         private IPlayer _player;
         private IGlobal _global;
-        private bool _finishScene = false;
         private int _numInput;
 
         public void Awake(IGameManager gameManager)
@@ -113,7 +109,7 @@ namespace TheEpidemic
             _player = new Player();
             _global = gameManager.Global;
         }
-        public void Render()
+        public override void Render()
         {
             Console.Clear();
             _gameManager.Reset();
@@ -152,7 +148,7 @@ namespace TheEpidemic
 
         }
 
-        public void Input()
+        public override void Input()
         {
             do
             {
@@ -166,7 +162,7 @@ namespace TheEpidemic
             } while (int.TryParse(Console.ReadLine(), out _numInput) == false || _numInput < 0 || _numInput > 4);
         }
 
-        public void Update()
+        public override void Update()
         {
             switch (_numInput)
             {
@@ -203,6 +199,5 @@ namespace TheEpidemic
             }
         }
 
-        public bool FinishScene { get { return _finishScene; } set { _finishScene = value; } }
     }
 }
