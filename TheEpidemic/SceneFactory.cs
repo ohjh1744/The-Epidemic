@@ -8,12 +8,12 @@ namespace TheEpidemic
 {
     public interface ISceneFactory
     {
-        IScene CreateScene();
+        Scene CreateScene();
     }
 
     public class FirstSceneFactory : ISceneFactory
     {
-        public IScene CreateScene()
+        public Scene CreateScene()
         {
             return new FirstScene();
         }
@@ -21,7 +21,7 @@ namespace TheEpidemic
 
     public class ChoiceSceneFactory : ISceneFactory
     {
-        public IScene CreateScene()
+        public Scene CreateScene()
         {
             return new ChoiceScene();
         }
@@ -29,7 +29,7 @@ namespace TheEpidemic
 
     public class GameSceneFactory : ISceneFactory
     {
-        public IScene CreateScene()
+        public Scene CreateScene()
         {
             return new GameScene();
         }
