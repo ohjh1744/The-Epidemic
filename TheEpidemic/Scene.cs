@@ -112,7 +112,6 @@ namespace TheEpidemic
         public override void Render()
         {
             Console.Clear();
-            _gameManager.Reset();
             for (int i = 0; i < 20; i++)
             {
                 for(int j = 0; j < 30; j++)
@@ -130,22 +129,20 @@ namespace TheEpidemic
                         Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.Write("■");
                         Console.ResetColor();
-                        _gameManager.Infected++;
                     }
                     else if (_gameManager.Map[i, j] == 3)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write("■");
                         Console.ResetColor();
-                        _gameManager.Death++;
-                        _gameManager.Survivor--;
                     }
                 }
                 Console.WriteLine();
             }
+  
             _global.FindEpidemic(_gameManager);
-            //여기부분을 News
             _gameManager.Show();
+            _gameManager.Reset();
 
         }
 
@@ -172,7 +169,7 @@ namespace TheEpidemic
                     break;
                 case 2:
                     _player.UpdateFatalityRate();
-                    break;
+                    break; 
                 case 3:
                     _player.UseSkill();
                     break;

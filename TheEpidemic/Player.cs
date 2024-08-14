@@ -120,6 +120,21 @@
             _gameManager.Epidemic.BuffWaitTime--;
         }
 
+        public void DownSurvivor()
+        {
+            _gameManager.Survivor--;
+        }
+
+        public void UpDeath()
+        {
+            _gameManager.Death++;
+        }
+
+        public void UpInfected()
+        {
+            _gameManager.Infected++;
+        }
+
 
         public void FindSurvivor( )
         {
@@ -160,6 +175,22 @@
                     if (map[i, j] == 1 && visited[i, j] == false)
                     {
                         InfectOrKill(i, j, 1, map, visited, _gameManager.Epidemic.InfectRate);
+                    }
+                }
+            }
+
+            for (int i = 0; i < 20; i++)
+            {
+                for (int j = 0; j < 30; j++)
+                {
+                    if (map[i, j] == 2)
+                    {
+                        _gameManager.Update += UpInfected;
+                    }
+                    else if (map[i, j] == 3)
+                    {
+                        _gameManager.Update += DownSurvivor;
+                        _gameManager.Update += UpDeath;
                     }
                 }
             }

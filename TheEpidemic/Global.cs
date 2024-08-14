@@ -35,6 +35,7 @@ namespace TheEpidemic
             }
         }
 
+
         public void FindEpidemic(IGameManager gameManager)
         {
             if (gameManager.Death > 0)
