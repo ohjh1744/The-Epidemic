@@ -75,65 +75,6 @@
             }
 
         }
-        public void UpInfectRate()
-        {
-            _gameManager.Epidemic.InfectRate += 5;
-        }
-
-        public void UseGoldForInfect()
-        {
-            _gameManager.Gold -= _gameManager.UpgradeGoldForInfect;
-        }
-
-        public void UpgradeGoldForInfect()
-        {
-            _gameManager.UpgradeGoldForInfect += 20;
-        }
-
-        public void UpFatalityRate()
-        {
-            _gameManager.Epidemic.FatalityRate += 5;
-        }
-
-        public void UseGoldForFatalityRate()
-        {
-            _gameManager.Gold -= _gameManager.UpgradeGoldForFatality;
-        }
-
-        public void UpgradeGoldForFatality()
-        {
-            _gameManager.UpgradeGoldForFatality += 20;
-        }
-
-        public void IncreaseDay()
-        {
-            _gameManager.Day++;
-        }
-
-        public void DecreaseBuffDuration()
-        {
-            _gameManager.Epidemic.BuffDuration--;
-        }
-
-        public void DecreaseBuffWaitTime()
-        {
-            _gameManager.Epidemic.BuffWaitTime--;
-        }
-
-        public void DownSurvivor()
-        {
-            _gameManager.Survivor--;
-        }
-
-        public void UpDeath()
-        {
-            _gameManager.Death++;
-        }
-
-        public void UpInfected()
-        {
-            _gameManager.Infected++;
-        }
 
 
         public void FindSurvivor( )
@@ -243,6 +184,66 @@
                     }
                 }
             }
+        }
+
+        public void UpInfectRate()
+        {
+            _gameManager.Epidemic.InfectRate += 5;
+        }
+
+        public void UseGoldForInfect()
+        {
+            _gameManager.Gold -= _gameManager.UpgradeGoldForInfect;
+        }
+
+        public void UpgradeGoldForInfect()
+        {
+            _gameManager.UpgradeGoldForInfect += 20;
+        }
+
+        public void UpFatalityRate()
+        {
+            _gameManager.Epidemic.FatalityRate += 5;
+        }
+
+        public void UseGoldForFatalityRate()
+        {
+            _gameManager.Gold -= _gameManager.UpgradeGoldForFatality;
+        }
+
+        public void UpgradeGoldForFatality()
+        {
+            _gameManager.UpgradeGoldForFatality += 20;
+        }
+
+        public void IncreaseDay()
+        {
+            _gameManager.Day++;
+        }
+
+        public void DecreaseBuffDuration()
+        {
+            _gameManager.Epidemic.BuffDuration--;
+        }
+
+        public void DecreaseBuffWaitTime()
+        {
+            _gameManager.Epidemic.BuffWaitTime--;
+        }
+
+        public void DownSurvivor()
+        {
+            _gameManager.Survivor--;
+        }
+
+        public void UpDeath()
+        {
+            _gameManager.Death++;
+        }
+
+        public void UpInfected()
+        {
+            _gameManager.Infected++;
         }
 
 
