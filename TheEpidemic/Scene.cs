@@ -93,14 +93,12 @@
     {
         private IGameManager _gameManager;
         private IPlayer _player;
-        private IGlobal _global;
         private int _numInput;
 
         public void Awake(IGameManager gameManager)
         {
             _gameManager = gameManager;
             _player = new Player(gameManager);
-            _global = gameManager.Global;
         }
         public override void Render()
         {
@@ -133,7 +131,7 @@
                 Console.WriteLine();
             }
 
-            _global.FindEpidemic(_gameManager);
+            _gameManager.Global.FindEpidemic(_gameManager);
             _gameManager.Show();
             _gameManager.Reset();
 
@@ -167,7 +165,7 @@
                     _player.UseSkill();
                     break;
                 case 4:                  
-                    _global.DevelopRemedy();
+                    _gameManager.Global.DevelopRemedy();
                     break;
             }
             _gameManager.StartUpdate();
@@ -177,7 +175,7 @@
         public void GameFinish()
         {
 
-            if (_global.Cure == 100)
+            if (_gameManager.Global.Cure == 100)
             {
                 Render();
                 Console.WriteLine("인구가 치료제를 완성시켰습니다. 패배.");
