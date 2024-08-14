@@ -7,9 +7,9 @@ namespace TheEpidemic
     {
         //전염병 종류
         List<Epidemic> Epidemics { get; set; }
-        // Player
+        // Player가 고른 전염병
         Epidemic Epidemic { get; set; }
-        //상대
+        //Global
         IGlobal Global { get; set; }
         //맵 상태 1: 전염, 2: 죽음
         int[,] Map { get; set; }
