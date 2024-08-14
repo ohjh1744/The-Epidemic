@@ -164,7 +164,8 @@
                 case 3:
                     _player.UseSkill();
                     break;
-                case 4:                  
+                case 4:                    
+                    _player.Next();
                     _gameManager.Global.DevelopRemedy();
                     break;
             }
@@ -175,7 +176,7 @@
         public void GameFinish()
         {
 
-            if (_gameManager.Global.Cure == 100)
+            if (_gameManager.Global.Cure >= 100)
             {
                 Render();
                 Console.WriteLine("인구가 치료제를 완성시켰습니다. 패배.");
