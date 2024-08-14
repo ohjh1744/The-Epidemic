@@ -12,7 +12,7 @@
 
     public class Player : IPlayer
     {
-        IGameManager _gameManager;
+        private IGameManager _gameManager;
         public Player(IGameManager gameManager)
         {
             _gameManager = gameManager;
