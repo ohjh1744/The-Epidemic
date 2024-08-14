@@ -14,6 +14,7 @@
             epidemicFactory = new VirusFactory();
             epidemic = epidemicFactory.Create();
             gameManager.Epidemics.Add(epidemic);
+
         }
         
         static void ResetScenes(Scene[] scenes)
