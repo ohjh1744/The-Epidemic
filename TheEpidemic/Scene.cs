@@ -106,7 +106,7 @@ namespace TheEpidemic
         public void Awake(IGameManager gameManager)
         {
             _gameManager = gameManager;
-            _player = new Player();
+            _player = new Player(gameManager);
             _global = gameManager.Global;
         }
         public override void Render()
@@ -153,9 +153,9 @@ namespace TheEpidemic
             do
             {
                 Console.WriteLine("---------------------------------------------------------------------------------");
-                Console.WriteLine($"하고 싶은 행동을 고르세요. (잘못입력시 재입력)       보유골드: {_player.Gold}G");
-                Console.WriteLine($"1. 전염률 증가({_player.GoldUpInfectRate}G): ");
-                Console.WriteLine($"2. 치사율 증가({_player.GoldUpFatalityRate}G): ");
+                Console.WriteLine($"하고 싶은 행동을 고르세요. (잘못입력시 재입력)       보유골드: {_gameManager.Gold}G");
+                Console.WriteLine($"1. 전염률 증가({_gameManager.UpgradeGoldForInfect}G): ");
+                Console.WriteLine($"2. 치사율 증가({_gameManager.UpgradeGoldForFatality}G): ");
                 Console.WriteLine($"3. 스킬 사용 (쿨타임 {_gameManager.Epidemic.BuffWaitTime}일 남았습니다.)");
                 Console.WriteLine("4. 다음 날로 넘어가기");
                 Console.WriteLine("---------------------------------------------------------------------------------");
@@ -167,16 +167,16 @@ namespace TheEpidemic
             switch (_numInput)
             {
                 case 1:
-                    _player.UpInfectRate(_gameManager);
+                    _player.UpInfectRate();
                     break;
                 case 2:
-                    _player.UpFatalityRate(_gameManager);
+                    _player.UpFatalityRate();
                     break;
                 case 3:
-                    _player.UseSkill(_gameManager);
+                    _player.UseSkill();
                     break;
                 case 4:
-                    _player.Next(_gameManager);
+                    _player.Next();
                     _global.DevelopRemedy();
                     break;
             }

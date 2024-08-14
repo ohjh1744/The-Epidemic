@@ -2,6 +2,7 @@
 
 namespace TheEpidemic
 {
+    //게임의 모든 데이터들을 관리하고 보여주는 관리자 인터페이스 
     public interface IGameManager
     {
         //전염병 종류
@@ -22,10 +23,13 @@ namespace TheEpidemic
         int Survivor { get; set; }
         // Day날짜
         int Day { get; set; }
+        int Gold { get; set; }
+        int UpgradeGoldForInfect { get; set; }
+        int UpgradeGoldForFatality { get; set; }
         // 상태 출력
         void Show();
-
         void Reset();
+
     }
 
     public class GameManager : IGameManager
@@ -39,6 +43,11 @@ namespace TheEpidemic
         private int _human;
         private int _survivor;
         private int _day;
+        private int _gold;
+        private int _upgradeGoldForInfect;
+        private int _upgradeGoldForFatality;
+
+
 
         public GameManager()
         {
@@ -84,6 +93,9 @@ namespace TheEpidemic
             }
             _survivor = _human;
             _day = 1;
+            _gold = 0;
+            _upgradeGoldForInfect = 20;
+            _upgradeGoldForFatality = 20;
         }
 
         public List<Epidemic> Epidemics { get { return _epidemics; } set { _epidemics = value; } }
@@ -95,6 +107,9 @@ namespace TheEpidemic
         public int Human { get { return _human; } set { _human = value; } }
         public int Survivor { get { return _survivor; } set { _survivor = value; } }
         public int Day { get { return _day; } set { _day = value; } }
+        public int Gold { get { return _gold; } set { _gold = value; } }
+        public int UpgradeGoldForInfect { get { return _upgradeGoldForInfect; } set { _upgradeGoldForInfect = value; } }
+        public int UpgradeGoldForFatality { get { return _upgradeGoldForFatality; } set { _upgradeGoldForFatality = value; } }
         public void Show()
         {
             Console.WriteLine($"----------------------------------------------------------");
@@ -112,5 +127,7 @@ namespace TheEpidemic
             _death = 0;
             _survivor = Human;
         }
+
+
     }
 }

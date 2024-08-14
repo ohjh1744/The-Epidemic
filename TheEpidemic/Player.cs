@@ -2,43 +2,29 @@
 {
     public interface IPlayer
     {
-        int Gold { get; set; }
-        int GoldUpInfectRate { get; set; }
-        int GoldUpFatalityRate { get; set; }
-        void UpInfectRate(IGameManager gameManager);
-        void UpFatalityRate(IGameManager gameManager);
-        void UseSkill(IGameManager gameManager);
-        void Next(IGameManager gameManager);
-        void FindSurvivor(IGameManager gameManager);
+        void UpInfectRate();
+        void UpFatalityRate();
+        void UseSkill();
+        void Next();
+        void FindSurvivor();
 
     }
 
 
     public class Player : IPlayer
     {
-        private int _gold;
-        private int _goldUpInfectRate;
-        private int _glodUpFatalityRate;
-  
-        public Player()
+        IGameManager _gameManager;
+        public Player(IGameManager gameManager)
         {
-            _gold = 0;
-            _goldUpInfectRate = 20;
-            _glodUpFatalityRate = 20;
+            _gameManager = gameManager;
         }
-
-        public int Gold { get { return _gold; } set { _gold = value; } }
-        public int GoldUpInfectRate { get { return _goldUpInfectRate; } set { _goldUpInfectRate = value; } }
-        public int GoldUpFatalityRate { get { return _glodUpFatalityRate; } set { _glodUpFatalityRate = value; } }
-
-
-        public void UpInfectRate(IGameManager gameManager)
+        public void UpInfectRate()
         {
-            if (Gold >= GoldUpInfectRate)
+            if (_gameManager.Gold >= _gameManager.UpgradeGoldForInfect)
             {
-                gameManager.Epidemic.InfectRate += 5;
-                Gold -= GoldUpInfectRate;
-                GoldUpInfectRate += 20;
+                _gameManager.Epidemic.InfectRate += 5;
+                _gameManager.Gold -= _gameManager.UpgradeGoldForInfect;
+                _gameManager.UpgradeGoldForInfect += 20;
             }
             else
             {
@@ -46,13 +32,13 @@
             }
         }
 
-        public void UpFatalityRate(IGameManager gameManager)
+        public void UpFatalityRate( )
         {
-            if (Gold >= GoldUpFatalityRate)
+            if (_gameManager.Gold >= _gameManager.UpgradeGoldForFatality)
             {
-                gameManager.Epidemic.FatalityRate += 5;
-                Gold -= GoldUpFatalityRate;
-                GoldUpFatalityRate += 20;
+                _gameManager.Epidemic.FatalityRate += 5;
+                _gameManager.Gold -= _gameManager.UpgradeGoldForFatality;
+                _gameManager.UpgradeGoldForFatality += 20;
             }
             else
             {
@@ -60,42 +46,42 @@
             }
         }
 
-        public void UseSkill(IGameManager gameManager)
+        public void UseSkill( )
         {
-            if(gameManager.Epidemic.BuffWaitTime == 0)
+            if(_gameManager.Epidemic.BuffWaitTime == 0)
             {
-                gameManager.Epidemic.Buff();
+                _gameManager.Epidemic.Buff();
             }
             else
             {
-                Console.WriteLine($"아직 {gameManager.Epidemic.BuffWaitTime}일 지나야합니다.");
+                Console.WriteLine($"아직 {_gameManager.Epidemic.BuffWaitTime}일 지나야합니다.");
             }
         }
-        public void Next(IGameManager gameManager)
+        public void Next( )
         {
-            FindSurvivor(gameManager);
-            gameManager.Day++;
-            if(gameManager.Epidemic.IsBuff == true)
+            FindSurvivor();
+            _gameManager.Day++;
+            if(_gameManager.Epidemic.IsBuff == true)
             {
-                if (gameManager.Epidemic.BuffDuration > 0)
+                if (_gameManager.Epidemic.BuffDuration > 0)
                 {
-                    gameManager.Epidemic.BuffDuration--;
+                    _gameManager.Epidemic.BuffDuration--;
                 }
-                else if (gameManager.Epidemic.BuffDuration == 0)
+                else if (_gameManager.Epidemic.BuffDuration == 0)
                 {
-                    gameManager.Epidemic.DeBuff();
+                    _gameManager.Epidemic.DeBuff();
                 }
             }
-            if (gameManager.Epidemic.BuffWaitTime != 0){
-                gameManager.Epidemic.BuffWaitTime--;
+            if (_gameManager.Epidemic.BuffWaitTime != 0){
+                _gameManager.Epidemic.BuffWaitTime--;
             }
 
         }
 
 
-        public void FindSurvivor(IGameManager gameManager)
+        public void FindSurvivor( )
         {
-            int[,] map = gameManager.Map;
+            int[,] map = _gameManager.Map;
             bool[,] visited = new bool[20, 30];
 
             for (int i = 0; i < 20; i++)
@@ -112,7 +98,7 @@
                 {
                     if (map[i, j] == 2 && visited[i, j] == false)
                     {
-                        InfectOrKill(i, j, 2, map, visited, gameManager.Epidemic.FatalityRate);
+                        InfectOrKill(i, j, 2, map, visited, _gameManager.Epidemic.FatalityRate);
                     }
                 }
             }
@@ -131,7 +117,7 @@
                 {
                     if (map[i, j] == 1 && visited[i, j] == false)
                     {
-                        InfectOrKill(i, j, 1, map, visited, gameManager.Epidemic.InfectRate);
+                        InfectOrKill(i, j, 1, map, visited, _gameManager.Epidemic.InfectRate);
                     }
                 }
             }
@@ -153,7 +139,7 @@
             {
                 map[y, x] = visitNum+1;
                 visited[y, x] = true;
-                Gold += 1;
+                _gameManager.Gold += 1;
             }
 
             while (q.Count != 0)
@@ -179,7 +165,7 @@
                         {
                             map[ny, nx] = visitNum+1;
                             visited[ny, nx] = true;
-                            Gold += 1;
+                            _gameManager.Gold += 1;
                         }
                     }
                 }
