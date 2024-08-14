@@ -97,16 +97,13 @@ namespace TheEpidemic
         public int Day { get { return _day; } set { _day = value; } }
         public void Show()
         {
-            Console.WriteLine($"-------------------------------");
+            Console.WriteLine($"----------------------------------------------------------");
             Console.WriteLine($"Day: {_day}");
-            Console.WriteLine($"전염병: {_epidemic.Name}");
-            Console.WriteLine($"전염률: {_epidemic.InfectRate}");
-            Console.WriteLine($"치사율: {_epidemic.FatalityRate}");
+            Console.WriteLine($"전염병: {_epidemic.Name}        생존자: {_survivor}");
+            Console.WriteLine($"전염률: {_epidemic.InfectRate}        전염수: {_infected}");
+            Console.WriteLine($"치사율: {_epidemic.FatalityRate}        사망수: {_death}");
             Console.WriteLine($"치료제 개발율: {_global.Cure}");
-            Console.WriteLine($"생존자: {_survivor}");
-            Console.WriteLine($"전염수: {_infected}");
-            Console.WriteLine($"사망수: {_death}");
-            Console.WriteLine($"-------------------------------");
+            Console.WriteLine($"----------------------------------------------------------");
         }
 
         public void Reset()

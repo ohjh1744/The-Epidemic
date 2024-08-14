@@ -12,7 +12,6 @@ namespace TheEpidemic
         public void Render();
         public  void Input();
         public void Update();
-
         public bool FinishScene { get; set; }
 
     }
@@ -32,8 +31,9 @@ namespace TheEpidemic
             Console.WriteLine("#        전염병 퍼트리기              #");
             Console.WriteLine("#                                     #");
             Console.WriteLine("#######################################");
-            Console.WriteLine("게임설명: 질병을 전세계에 퍼트리세요!");
-            Console.WriteLine("게임설명: 치료제가 완성하기전에 전세계의 인구를 멸종시키면 당신의 승리입니다.");
+            Console.WriteLine("게임설명: ");
+            Console.WriteLine("질병을 전세계에 퍼트리세요!");
+            Console.WriteLine("치료제가 완성하기전에 전세계의 인구를 멸종시키면 당신의 승리입니다.");
             Console.Write("게임을 하실거면 엔터를 눌러주세요.: ");
 
         }
@@ -49,14 +49,12 @@ namespace TheEpidemic
         }
 
        public bool FinishScene{ get { return _finishScene; } set{ _finishScene = value; } }
-
- 
     }
 
     public class ChoiceScene:IScene, IAwake
     {
-        private bool _finishScene = false;
         private IGameManager _gameManager;
+        private bool _finishScene = false;
         private int _numEpidemic;
 
         public void Awake(IGameManager gameManager)
@@ -66,28 +64,30 @@ namespace TheEpidemic
         public void Render()
         {
             Console.Clear();
-            Console.WriteLine("#################################");
-            Console.WriteLine("#          전염병 선택          #");
-            Console.WriteLine("#################################");
-            Console.WriteLine("1. 박테리아");
-            Console.WriteLine("전염률: 3");
-            Console.WriteLine("치사률: 2");
-            Console.WriteLine("스킬:  이틀동안 치사율 두 배 상승, 쿨타임: 4일");
-            Console.WriteLine("#################################");
-            Console.WriteLine("2. 바이러스");
-            Console.WriteLine("전염률: 5");
-            Console.WriteLine("치사률: 1");
-            Console.WriteLine("스킬:  이틀 동안 전염률 두 배 상승, 쿨타임: 4일");
-            Console.WriteLine("#################################");
+            Console.WriteLine("#####################################################");
+            Console.WriteLine("#                     전염병 선택                   #");
+            Console.WriteLine("#####################################################");
+            Console.WriteLine($"1. {_gameManager.Epidemics[0].Name} ");
+            Console.WriteLine($"전염률: {_gameManager.Epidemics[0].InfectRate} ");
+            Console.WriteLine($"치사률: {_gameManager.Epidemics[0].FatalityRate} ");
+            Console.WriteLine($"스킬:  이틀동안 치사율 두 배 상승                ");
+            Console.WriteLine($"쿨타임:  {_gameManager.Epidemics[0].BuffWaitTime}");
+            Console.WriteLine($"지속시간:{_gameManager.Epidemics[0].BuffDuration}");
+            Console.WriteLine("#####################################################");
+            Console.WriteLine($"2. {_gameManager.Epidemics[1].Name}              ");
+            Console.WriteLine($"전염률: {_gameManager.Epidemics[1].InfectRate}   ");
+            Console.WriteLine($"치사률: {_gameManager.Epidemics[1].FatalityRate} ");
+            Console.WriteLine($"스킬:  이틀동안 치사율 두 배 상승                ");
+            Console.WriteLine($"쿨타임:  {_gameManager.Epidemics[1].BuffWaitTime}");
+            Console.WriteLine($"지속시간:{_gameManager.Epidemics[1].BuffDuration}");
+            Console.WriteLine("#####################################################");
             Console.WriteLine("원하는 전염병을 선택해주세요.(잘못입력시 재입력)");
         }
 
         public void Input()
         {
             do
-            {
-
-            } while (int.TryParse(Console.ReadLine(), out _numEpidemic) == false || _numEpidemic < 1 || _numEpidemic > 2);
+            { } while (int.TryParse(Console.ReadLine(), out _numEpidemic) == false || _numEpidemic < 1 || _numEpidemic > 2);
         }
 
         public void Update()
@@ -101,11 +101,11 @@ namespace TheEpidemic
 
     public class GameScene : IScene, IAwake
     {
-        private bool _finishScene = false;
         private IGameManager _gameManager;
-        private int _numInput;
         private IPlayer _player;
         private IGlobal _global;
+        private bool _finishScene = false;
+        private int _numInput;
 
         public void Awake(IGameManager gameManager)
         {
