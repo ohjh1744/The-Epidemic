@@ -39,7 +39,7 @@ namespace TheEpidemic
         {
             if (gameManager.Death > 0)
             {
-                Console.WriteLine("---------------------------------------------------------------------------------");
+                Console.WriteLine($"----------------------------------------------------------");
                 Console.WriteLine("세계 정부가 질병을 발견했습니다.! 치료제 개발을 시작합니다.");
                 _isFindEpidemic = true;
             }
