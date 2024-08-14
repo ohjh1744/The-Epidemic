@@ -100,8 +100,8 @@ namespace TheEpidemic
             Console.WriteLine($"----------------------------------------------------------");
             Console.WriteLine($"Day: {_day}");
             Console.WriteLine($"전염병: {_epidemic.Name}        생존자: {_survivor}");
-            Console.WriteLine($"전염률: {_epidemic.InfectRate}        전염수: {_infected}");
-            Console.WriteLine($"치사율: {_epidemic.FatalityRate}        사망수: {_death}");
+            Console.WriteLine($"전염률: {_epidemic.InfectRate}               전염수: {_infected}");
+            Console.WriteLine($"치사율: {_epidemic.FatalityRate}               사망수: {_death}");
             Console.WriteLine($"치료제 개발율: {_global.Cure}");
             Console.WriteLine($"----------------------------------------------------------");
         }

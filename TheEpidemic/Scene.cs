@@ -34,7 +34,7 @@ namespace TheEpidemic
             Console.WriteLine("게임설명: ");
             Console.WriteLine("질병을 전세계에 퍼트리세요!");
             Console.WriteLine("치료제가 완성하기전에 전세계의 인구를 멸종시키면 당신의 승리입니다.");
-            Console.Write("게임을 하실거면 엔터를 눌러주세요.: ");
+            Console.Write("(게임을 하실거면 엔터를 눌러주세요.: )");
 
         }
 
