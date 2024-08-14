@@ -10,12 +10,17 @@ namespace TheEpidemic
 
     public class Global 
     {
-        int _cure = 0;
-        int _developRate = 0;
-        bool _isFindEpidemic = false;
+        private int _cure = 0;
+        private int _developRate = 0;
+        private bool _isFindEpidemic = false;
 
         public int Cure { get { return _cure; } set { _cure = value; } }
         public int DevelopRate { get { return _developRate; } set { _developRate = value; } }
+
+        public void UpCure()
+        {
+            Cure += _developRate;
+        }
 
         public void DevelopRemedy()
         {
@@ -23,14 +28,14 @@ namespace TheEpidemic
             {
                 Random random = new Random();
                 _developRate = random.Next(0, 10);
-                Cure += _developRate;
+                GameManager.Instance.Update += UpCure;
             }
         }
 
 
-        public void FindEpidemic(IGameManager gameManager)
+        public void FindEpidemic( )
         {
-            if (gameManager.Death > 0)
+            if (GameManager.Instance.Death > 0)
             {
                 Console.WriteLine($"----------------------------------------------------------");
                 Console.WriteLine("세계 정부가 질병을 발견했습니다.! 치료제 개발을 시작합니다.");

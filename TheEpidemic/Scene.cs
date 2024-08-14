@@ -2,7 +2,12 @@
 {
     public abstract class Scene
     {
-        private bool _finishScene = false;
+        private bool _finishScene;
+
+        public Scene()
+        {
+            _finishScene = false;
+        }
         public abstract void Render();
         public abstract void Input();
         public abstract void Update();
@@ -12,7 +17,7 @@
 
     public interface IAwake
     {
-        public void Awake(IGameManager gameManager);
+        public void Awake(Player player );
     }
 
     public class FirstScene : Scene
@@ -45,12 +50,12 @@
 
     public class ChoiceScene : Scene, IAwake
     {
-        private IGameManager _gameManager;
+        private Player _player;
         private int _numEpidemic;
 
-        public void Awake(IGameManager gameManager)
+        public void Awake(Player player)
         {
-            _gameManager = gameManager;
+            _player = player;
         }
         public override void Render()
         {
@@ -58,19 +63,19 @@
             Console.WriteLine("#####################################################");
             Console.WriteLine("#                     전염병 선택                   #");
             Console.WriteLine("#####################################################");
-            Console.WriteLine($"1. {_gameManager.Epidemics[0].Name} ");
-            Console.WriteLine($"전염률: {_gameManager.Epidemics[0].InfectRate} ");
-            Console.WriteLine($"치사률: {_gameManager.Epidemics[0].FatalityRate} ");
-            Console.WriteLine($"스킬:  이틀동안 치사율 두 배 상승                ");
-            Console.WriteLine($"쿨타임:  {_gameManager.Epidemics[0].BuffWaitTime}");
-            Console.WriteLine($"지속시간:{_gameManager.Epidemics[0].BuffDuration}");
+            Console.WriteLine($"#1. 박테리아                                         #");
+            Console.WriteLine($"#전염률: 3                                           #");
+            Console.WriteLine($"#치사률: 2                                           #");
+            Console.WriteLine($"#스킬:  이틀동안 치사율 두 배 상승                   #");
+            Console.WriteLine($"#쿨타임: 4                                           #");
+            Console.WriteLine($"#지속시간:2                                          #");
             Console.WriteLine("#####################################################");
-            Console.WriteLine($"2. {_gameManager.Epidemics[1].Name}              ");
-            Console.WriteLine($"전염률: {_gameManager.Epidemics[1].InfectRate}   ");
-            Console.WriteLine($"치사률: {_gameManager.Epidemics[1].FatalityRate} ");
-            Console.WriteLine($"스킬:  이틀동안 전염률 두 배 상승                ");
-            Console.WriteLine($"쿨타임:  {_gameManager.Epidemics[1].BuffWaitTime}");
-            Console.WriteLine($"지속시간:{_gameManager.Epidemics[1].BuffDuration}");
+            Console.WriteLine($"#2. 바이러스                                         #");
+            Console.WriteLine($"#전염률: 5                                           #");
+            Console.WriteLine($"#치사률: 1                                           #");
+            Console.WriteLine($"#스킬:  이틀동안 전염률 두 배 상승                   #");
+            Console.WriteLine($"#쿨타임: 4                                           #");
+            Console.WriteLine($"#지속시간:2                                          #");
             Console.WriteLine("#####################################################");
             Console.WriteLine("원하는 전염병을 선택해주세요.(잘못입력시 재입력)");
         }
@@ -83,7 +88,20 @@
 
         public override void Update()
         {
-            _gameManager.Epidemic = _gameManager.Epidemics[_numEpidemic - 1];
+            IEpidemicFactory epidemicFactory;
+            switch (_numEpidemic)
+            {
+                case 1:
+                    epidemicFactory = new BacteriaFactory();
+                    _player.GetEpidemic(epidemicFactory.Create());
+                    break;
+                case 2:
+                    epidemicFactory = new VirusFactory();
+                    _player.GetEpidemic(epidemicFactory.Create());
+                    break;
+                default:
+                    break;
+            }
             FinishScene = true;
         }
 
@@ -91,15 +109,19 @@
 
     public class GameScene : Scene, IAwake
     {
-        private IGameManager _gameManager;
-        private IPlayer _player;
+        private Player _player;
+        private Global _global;
         private int _numInput;
 
-        public void Awake(IGameManager gameManager)
+        public GameScene()
         {
-            _gameManager = gameManager;
-            _player = new Player(gameManager);
+            _global = new Global();
         }
+        public void Awake(Player player)
+        {
+            _player = player;
+        }
+
         public override void Render()
         {
             Console.Clear();
@@ -107,21 +129,21 @@
             {
                 for (int j = 0; j < 30; j++)
                 {
-                    if (_gameManager.Map[i, j] == 0)
+                    if(GameManager.Instance.Map[i, j] == 0)
                     {
                         Console.Write("□");
                     }
-                    else if (_gameManager.Map[i, j] == 1)
+                    else if (GameManager.Instance.Map[i, j] == 1)
                     {
                         Console.Write("■");
                     }
-                    else if (_gameManager.Map[i, j] == 2)
+                    else if (GameManager.Instance.Map[i, j] == 2)
                     {
                         Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.Write("■");
                         Console.ResetColor();
                     }
-                    else if (_gameManager.Map[i, j] == 3)
+                    else if (GameManager.Instance.Map[i, j] == 3)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write("■");
@@ -131,9 +153,9 @@
                 Console.WriteLine();
             }
 
-            _gameManager.Global.FindEpidemic(_gameManager);
-            _gameManager.Show();
-            _gameManager.Reset();
+            _global.FindEpidemic();
+            GameManager.Instance.Show();
+            GameManager.Instance.Reset();
 
         }
 
@@ -142,10 +164,10 @@
             do
             {
                 Console.WriteLine("---------------------------------------------------------------------------------");
-                Console.WriteLine($"하고 싶은 행동을 고르세요. (잘못입력시 재입력)       보유골드: {_gameManager.Gold}G");
-                Console.WriteLine($"1. 전염률 증가({_gameManager.UpgradeGoldForInfect}G): ");
-                Console.WriteLine($"2. 치사율 증가({_gameManager.UpgradeGoldForFatality}G): ");
-                Console.WriteLine($"3. 스킬 사용 (쿨타임 {_gameManager.Epidemic.BuffWaitTime}일 남았습니다.)");
+                Console.WriteLine($"하고 싶은 행동을 고르세요. (잘못입력시 재입력)       보유골드: {GameManager.Instance.Gold}G");
+                Console.WriteLine($"1. 전염률 증가({GameManager.Instance.UpgradeGoldForInfect}G): ");
+                Console.WriteLine($"2. 치사율 증가({GameManager.Instance.UpgradeGoldForFatality}G): ");
+                Console.WriteLine($"3. 스킬 사용 (쿨타임 {_player.Epidemic.BuffWaitTime}일 남았습니다.)");
                 Console.WriteLine("4. 다음 날로 넘어가기");
                 Console.WriteLine("---------------------------------------------------------------------------------");
             } while (int.TryParse(Console.ReadLine(), out _numInput) == false || _numInput < 0 || _numInput > 4);
@@ -166,23 +188,23 @@
                     break;
                 case 4:                    
                     _player.Next();
-                    _gameManager.Global.DevelopRemedy();
+                    _global.DevelopRemedy();
                     break;
             }
-            _gameManager.StartUpdate();
+            GameManager.Instance.StartUpdate();
             GameFinish();
         }
 
         public void GameFinish()
         {
 
-            if (_gameManager.Global.Cure >= 100)
+            if (GameManager.Instance.Cure >= 100)
             {
                 Render();
                 Console.WriteLine("인구가 치료제를 완성시켰습니다. 패배.");
                 FinishScene = true;
             }
-            else if(_gameManager.Survivor == 0)
+            else if(GameManager.Instance.Survivor == 0)
             {
                 Render();
                 Console.WriteLine("인류를 멸종시켰습니다. 승리!");

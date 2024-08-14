@@ -17,7 +17,6 @@ namespace TheEpidemic
         private bool _isBuff;
 
 
-        
         public string Name { get { return _name; } set { _name = value; } }
         public int InfectRate { get { return _infectRate; } set { _infectRate = value; } }
         public int FatalityRate { get { return _fatalityRate; } set { _fatalityRate = value; } }
@@ -80,6 +79,7 @@ namespace TheEpidemic
             BuffWaitTime = 0;
             //지속시간
             BuffDuration = 2;
+            IsBuff = false;
         }
 
 

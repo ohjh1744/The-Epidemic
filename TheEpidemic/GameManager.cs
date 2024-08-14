@@ -4,45 +4,14 @@ using System.Text;
 namespace TheEpidemic
 {
     //게임의 모든 데이터들을 관리하고 보여주는 관리자 인터페이스 
-    public interface IGameManager
+
+    public class GameManager 
     {
-        //상태 업데이트
-        event Action Update;
-        //전염병 종류
-        List<Epidemic> Epidemics { get; set; }
-        // Player가 고른 전염병
-        Epidemic Epidemic { get; set; }
-        //Global
-        Global Global { get; set; }
-        //맵 상태 1: 전염, 2: 죽음
-        int[,] Map { get; set; }
-        // 현재 전염수
-        int Infected { get; set; }
-        //세계인구수
-        int Human { get; set; }
-        // 현재 죽음수
-        int Death { get; set; }
-        //현재 살아남은 인구 수
-        int Survivor { get; set; }
-        // Day날짜
-        int Day { get; set; }
-        int Gold { get; set; }
-        int UpgradeGoldForInfect { get; set; }
-        int UpgradeGoldForFatality { get; set; }
-        void StartUpdate();
-        // 상태 출력
-        void Show();
-        void Reset();
-
-
-    }
-
-    public class GameManager : IGameManager
-    {
-        public event Action Update;
-        private List<Epidemic> _epidemics;
-        private Epidemic _epidemic;
-        private Global _global;
+        private static GameManager _instance;
+        private string _name;
+        private int _infectRate;
+        private int _fatalityRate;
+        private int _cure;
         private int[,] _map;
         private int _infected;
         private int _death;
@@ -53,15 +22,15 @@ namespace TheEpidemic
         private int _upgradeGoldForInfect;
         private int _upgradeGoldForFatality;
 
-
-
+        public event Action Update;
 
 
         public GameManager()
-        {
-            _epidemics = new List<Epidemic>();
-            _epidemic = new Virus();
-            _global = new Global();
+        {      
+            _name = "";
+            _infectRate = 0;
+            _fatalityRate = 0;
+            _cure = 0;
             _map = new int[,]
             {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0 },
@@ -107,9 +76,21 @@ namespace TheEpidemic
 
         }
 
-        public List<Epidemic> Epidemics { get { return _epidemics; } set { _epidemics = value; } }
-        public Epidemic Epidemic { get { return _epidemic; } set { _epidemic = value; } }
-        public Global Global { get { return _global; } set { _global = value; } }
+        public static GameManager Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new GameManager();
+                }
+                return _instance;
+            }
+        }
+        public string Name { get { return _name; } set { _name = value; } }
+        public int InfectRate { get { return _infectRate; } set { _infectRate = value; } }
+        public int FatalityRate { get { return _fatalityRate; } set { _fatalityRate = value; } }
+        public int Cure { get { return _cure; } set { _cure = value; } }
         public int[,] Map { get { return _map; } set { _map = value; } }
         public int Infected { get { return _infected; } set { _infected = value; } }
         public int Death { get { return _death; } set { _death = value; } }
@@ -119,14 +100,15 @@ namespace TheEpidemic
         public int Gold { get { return _gold; } set { _gold = value; } }
         public int UpgradeGoldForInfect { get { return _upgradeGoldForInfect; } set { _upgradeGoldForInfect = value; } }
         public int UpgradeGoldForFatality { get { return _upgradeGoldForFatality; } set { _upgradeGoldForFatality = value; } }
+       
         public void Show()
         {
             Console.WriteLine($"----------------------------------------------------------");
             Console.WriteLine($"Day: {_day}");
-            Console.WriteLine($"전염병: {_epidemic.Name}        생존자: {_survivor}");
-            Console.WriteLine($"전염률: {_epidemic.InfectRate}               전염수: {_infected}");
-            Console.WriteLine($"치사율: {_epidemic.FatalityRate}               사망수: {_death}");
-            Console.WriteLine($"치료제 개발율: {_global.Cure}");
+            Console.WriteLine($"전염병: {_name}        생존자: {_survivor}");
+            Console.WriteLine($"전염률: {_infectRate}               전염수: {_infected}");
+            Console.WriteLine($"치사율: {_fatalityRate}               사망수: {_death}");
+            Console.WriteLine($"치료제 개발율: {_cure}");
             Console.WriteLine($"----------------------------------------------------------");
         }
         public void StartUpdate()

@@ -1,22 +1,7 @@
 ﻿namespace TheEpidemic
 {
     internal class Program
-    {
-        static void ResetGameManager(IGameManager gameManager)
-        {
-            IEpidemicFactory epidemicFactory;
-            Epidemic epidemic;
-
-            epidemicFactory = new BacteriaFactory();
-            epidemic = epidemicFactory.Create();
-            gameManager.Epidemics.Add(epidemic);
-
-            epidemicFactory = new VirusFactory();
-            epidemic = epidemicFactory.Create();
-            gameManager.Epidemics.Add(epidemic);
-
-        }
-        
+    {   
         static void ResetScenes(Scene[] scenes)
         {
             ISceneFactory sceneFactory;
@@ -36,14 +21,14 @@
 
         }
 
-        static void PlayGame(Scene[] scenes, IGameManager gameManager)
+        static void PlayGame(Scene[] scenes, Player player)
         {
             int sceneNum = 0;
             while (sceneNum <= 2)
             {
                 if (scenes[sceneNum] is IAwake)
                 {
-                    (scenes[sceneNum] as IAwake).Awake(gameManager);
+                    (scenes[sceneNum] as IAwake).Awake(player);
                 }
                 while (scenes[sceneNum].FinishScene == false)
                 {
@@ -57,12 +42,10 @@
 
         static void Main(string[] args)
         {
-            IGameManager gameManager = new GameManager();
+            Player player = new Player();
             Scene[] scenes = new Scene[3];
-
-            ResetGameManager(gameManager);
             ResetScenes(scenes);
-            PlayGame(scenes, gameManager);
+            PlayGame(scenes, player);
         }
     }
 }
