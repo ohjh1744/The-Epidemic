@@ -181,7 +181,7 @@ namespace TheEpidemic
                     break;
                 case 4:
                     _player.Next(_gameManager);
-                    _global.UpCure();
+                    _global.DevelopRemedy();
                     break;
             }
             GameFinish();
