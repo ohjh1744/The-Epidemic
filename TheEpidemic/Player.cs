@@ -9,7 +9,7 @@
         void UpFatalityRate(IGameManager gameManager);
         void UseSkill(IGameManager gameManager);
         void Next(IGameManager gameManager);
-        void BfsStart(IGameManager gameManager);
+        void FindSurvivor(IGameManager gameManager);
 
     }
 
@@ -73,7 +73,7 @@
         }
         public void Next(IGameManager gameManager)
         {
-            BfsStart(gameManager);
+            FindSurvivor(gameManager);
             gameManager.Day++;
             if(gameManager.Epidemic.IsBuff == true)
             {
@@ -93,7 +93,7 @@
         }
 
 
-        public void BfsStart(IGameManager gameManager)
+        public void FindSurvivor(IGameManager gameManager)
         {
             int[,] map = gameManager.Map;
             bool[,] visited = new bool[20, 30];
@@ -112,7 +112,7 @@
                 {
                     if (map[i, j] == 2 && visited[i, j] == false)
                     {
-                        InfectorKillBfs(i, j, 2, map, visited, gameManager.Epidemic.FatalityRate);
+                        InfectOrKill(i, j, 2, map, visited, gameManager.Epidemic.FatalityRate);
                     }
                 }
             }
@@ -131,7 +131,7 @@
                 {
                     if (map[i, j] == 1 && visited[i, j] == false)
                     {
-                        InfectorKillBfs(i, j, 1, map, visited, gameManager.Epidemic.InfectRate);
+                        InfectOrKill(i, j, 1, map, visited, gameManager.Epidemic.InfectRate);
                     }
                 }
             }
@@ -139,7 +139,7 @@
 
         }
 
-        public void InfectorKillBfs(int y, int x, int visitNum, int[,] map, bool[,] visited, int rate)
+        public void InfectOrKill(int y, int x, int visitNum, int[,] map, bool[,] visited, int rate)
         {
             visited[y, x] = true;
             int[] dx = new int[4] { 1, -1, 0, 0 };
