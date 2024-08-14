@@ -18,6 +18,7 @@ namespace TheEpidemic
         int Human { get; set; }
         // 현재 죽음수
         int Death { get; set; }
+        //현재 살아남은 인구 수
         int Survivor { get; set; }
         // Day날짜
         int Day { get; set; }
@@ -77,11 +78,11 @@ namespace TheEpidemic
                 {
                     if (Map[i, j] == 1)
                     {
-                        Human++;
+                        _human++;
                     }
                 }
             }
-            _survivor = Human;
+            _survivor = _human;
             _day = 1;
         }
 
@@ -97,22 +98,22 @@ namespace TheEpidemic
         public void Show()
         {
             Console.WriteLine($"-------------------------------");
-            Console.WriteLine($"Day: {Day}");
-            Console.WriteLine($"전염병: {Epidemic.Name}");
-            Console.WriteLine($"전염률: {Epidemic.InfectRate}");
-            Console.WriteLine($"치사율: {Epidemic.FatalityRate}");
+            Console.WriteLine($"Day: {_day}");
+            Console.WriteLine($"전염병: {_epidemic.Name}");
+            Console.WriteLine($"전염률: {_epidemic.InfectRate}");
+            Console.WriteLine($"치사율: {_epidemic.FatalityRate}");
             Console.WriteLine($"치료제 개발율: {_global.Cure}");
-            Console.WriteLine($"생존자: {Survivor}");
-            Console.WriteLine($"전염수: {Infected}");
-            Console.WriteLine($"사망수: {Death}");
+            Console.WriteLine($"생존자: {_survivor}");
+            Console.WriteLine($"전염수: {_infected}");
+            Console.WriteLine($"사망수: {_death}");
             Console.WriteLine($"-------------------------------");
         }
 
         public void Reset()
         {
-            Infected = 0;
-            Death = 0;
-            Survivor = Human;
+            _infected = 0;
+            _death = 0;
+            _survivor = Human;
         }
     }
 }

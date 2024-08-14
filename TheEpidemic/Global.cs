@@ -12,7 +12,6 @@ namespace TheEpidemic
         int Cure { get; set; }
         int DevelopRate { get; set; }
         
-
         void UpCure();
         void FindEpidemic(IGameManager gameManager);
     }
