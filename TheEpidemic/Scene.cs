@@ -166,8 +166,7 @@
                 case 3:
                     _player.UseSkill();
                     break;
-                case 4:
-                    _player.Next();
+                case 4:                  
                     _global.DevelopRemedy();
                     break;
             }
