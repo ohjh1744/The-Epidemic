@@ -4,11 +4,12 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TheEpidemic.ITouchStates;
 
-namespace TheEpidemic
+namespace TheEpidemic 
 {
     // Player와 상대하는 클래스로, 질병이 발견되면 치료제를 개발하는 클래스
-    public class Global 
+    public class Global :ITouchCure
     {
         // 치료제 개발율
         private int _cure = 0;
@@ -21,7 +22,7 @@ namespace TheEpidemic
         public int DevelopRate { get { return _developRate; } set { _developRate = value; } }
 
         // 치료제 개발 -> 개발속도에 맞춰서
-        public void UpCure()
+        public void UpdateCure()
         {
             Cure += _developRate;
             GameManager.Instance.Cure = Cure;
@@ -34,7 +35,7 @@ namespace TheEpidemic
             {
                 Random random = new Random();
                 _developRate = random.Next(1, 7);
-                GameManager.Instance.Update += UpCure;
+                GameManager.Instance.Update += UpdateCure;
             }
         }
 

@@ -1,8 +1,10 @@
-﻿namespace TheEpidemic
+﻿using TheEpidemic.ITouchStates;
+
+namespace TheEpidemic
 {
  
     // Player가 할 수 있는 행동 및 사람들에게 전염을 퍼트리는 역할을 하는 클래스
-    public class Player 
+    public class Player : ITouchBuff, ITouchDay, ITouchDeath, ITouchFatalityRate, ITouchGoldForFatality, ITouchGoldForInfect, ITouchInfected, ITouchInfectRate, ITouchSurvivor
     {
         // 본인이 선택한 전염병
         private Epidemic _epidemic;
@@ -26,11 +28,11 @@
 
         }
         // 전염률 증가,골드감소, 전염률Upgrade골드 증가 -> 콜백함수를 통해 GameManager의 데이터 Update
-        public void UpdateInfectRate()
+        public void UpInfectRate()
         {
             if (_gameManager.Gold >= _gameManager.UpgradeGoldForInfect)
             {
-                _gameManager.Update += UpInfectRate;
+                _gameManager.Update += UpdateInfectRate;
                 _gameManager.Update += UseGoldForInfect;
                 _gameManager.Update += UpgradeGoldForInfect;
             }
@@ -40,11 +42,11 @@
             }
         }
         // 치사율 증가, 골드감소 , 치사율Upgrade골드 증가-> 콜백함수를 통해 GameManager의 데이터 Update
-        public void UpdateFatalityRate()
+        public void UpFatalityRate()
         {
             if (_gameManager.Gold >= _gameManager.UpgradeGoldForFatality)
             {
-                _gameManager.Update += UpFatalityRate;
+                _gameManager.Update += UpdateFatalityRate;
                 _gameManager.Update += UseGoldForFatality;
                 _gameManager.Update += UpgradeGoldForFatality;
             }
@@ -76,7 +78,7 @@
             {
                 if (_epidemic.BuffDuration > 0)
                 {
-                    _gameManager.Update += DecreaseBuffDuration;
+                    _gameManager.Update += UpdateBuffDuration;
                 }
                 else if (_epidemic.BuffDuration == 0)
                 {
@@ -85,7 +87,7 @@
                 }
             }
             if (_epidemic.BuffWaitTime != 0){
-                _gameManager.Update += DecreaseBuffWaitTime;
+                _gameManager.Update += UpdateBuffWaitTime;
             }
 
         }
@@ -143,12 +145,12 @@
                 {
                     if (map[i, j] == 2)
                     {
-                        _gameManager.Update += UpInfected;
+                        _gameManager.Update += UpdateInfected;
                     }
                     else if (map[i, j] == 3)
                     {
-                        _gameManager.Update += DownSurvivor;
-                        _gameManager.Update += UpDeath;
+                        _gameManager.Update += UpdateSurvivor;
+                        _gameManager.Update += UpdateDeath;
                     }
                 }
             }
@@ -205,7 +207,7 @@
         }
 
         //아래부터는 콜백함수를 위한 함수들
-        public void UpInfectRate( )
+        public void UpdateInfectRate( )
         {
             _gameManager.InfectRate += 5;
             _epidemic.InfectRate += 5;
@@ -221,7 +223,7 @@
             _gameManager.UpgradeGoldForInfect += 20;
         }
 
-        public void UpFatalityRate( )
+        public void UpdateFatalityRate( )
         {
             _gameManager.FatalityRate += 5;
             _epidemic.FatalityRate += 5;
@@ -248,28 +250,28 @@
         }
 
         //버프 지속시간은 epidemic에서 감소
-        public void DecreaseBuffDuration()
+        public void UpdateBuffDuration()
         {
             _epidemic.BuffDuration--;
         }
 
         //버프 쿨타임은 epidemic에서 감소
-        public void DecreaseBuffWaitTime( )
+        public void UpdateBuffWaitTime( )
         {
             _epidemic.BuffWaitTime--;
         }
 
-        public void DownSurvivor()
+        public void UpdateSurvivor()
         {
             _gameManager.Survivor--;
         }
 
-        public void UpDeath()
+        public void UpdateDeath()
         {
             _gameManager.Death++;
         }
 
-        public void UpInfected()
+        public void UpdateInfected()
         {
             _gameManager.Infected++;
         }
