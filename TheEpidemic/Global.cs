@@ -33,7 +33,7 @@ namespace TheEpidemic
             if (_isFindEpidemic)
             {
                 Random random = new Random();
-                _developRate = random.Next(0, 10);
+                _developRate = random.Next(1, 7);
                 GameManager.Instance.Update += UpCure;
             }
         }
