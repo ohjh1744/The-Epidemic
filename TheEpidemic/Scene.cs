@@ -92,7 +92,7 @@
             Console.WriteLine($"#전염률: 3                                            #");
             Console.WriteLine($"#치사률: 3                                            #");
             Console.WriteLine($"#스킬:  이틀동안 치사율,전염률 랜덤상승 or 감소       #");
-            Console.WriteLine($"#쿨타임: 4                                            #");
+            Console.WriteLine($"#쿨타임: 3                                            #");
             Console.WriteLine($"#지속시간:2                                           #");
             Console.WriteLine("#######################################################");
             Console.WriteLine("원하는 전염병을 선택해주세요.(잘못입력시 재입력)");

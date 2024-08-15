@@ -138,12 +138,12 @@ namespace TheEpidemic
             FatalityRate += randomFatality;
         }
 
-        //버프 쿨타임 4일
+        //버프 쿨타임 3일
         public override void Buff()
         {
             IsBuff = true;
             EnforceSkill();
-            BuffWaitTime = 4;
+            BuffWaitTime = 3;
         }
 
         //버프 지속시간 2일
