@@ -36,7 +36,7 @@ namespace TheEpidemic
         // 치사율 증가를 위해 필요한 골드
         private int _upgradeGoldForFatality;
 
-        // 콜백함수
+        // Player와 Global에서 업데이트된 내용에 따라 GameManager의 데이터들도 Update하기위한 콜백함수. -> 옵저버패턴
         public event Action Update;
 
         // 초기화
