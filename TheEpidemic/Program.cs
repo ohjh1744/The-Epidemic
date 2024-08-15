@@ -2,6 +2,11 @@
 {
     internal class Program
     {   
+        // 전염병 주식회사
+        // 게임 설명: 모은 인류를 멸종시키면 승리, 치료제가 나오기 전에 멸종시켜야함.
+        // 게임 순서: 총 3개의 씬으로, 메인화면씬 ->  전염병 선택씬 -> 게임씬
+        
+        // 메인화면, 전염병 선택신, 게임씬 3개의 씬 생성.
         static void ResetScenes(Scene[] scenes)
         {
             ISceneFactory sceneFactory;
@@ -21,6 +26,8 @@
 
         }
 
+        // 3개의 씬을 순서대로 진행.
+        // 2번째씬부터는 Player클래스가 필요하므로 IAwake인터페이스를 통해 Player데이터 사용.
         static void PlayGame(Scene[] scenes, Player player)
         {
             int sceneNum = 0;
