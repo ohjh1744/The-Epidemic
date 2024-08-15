@@ -116,6 +116,8 @@ namespace TheEpidemic
 
     public class Corona : Epidemic
     {
+        int randomInfect;
+        int randomFatality;
         public Corona()
         {
             Name = "코로나";
@@ -130,8 +132,10 @@ namespace TheEpidemic
         private void EnforceSkill()
         {
             Random random = new Random();
-            InfectRate = random.Next(-10, 21);
-            FatalityRate = random.Next(-10, 21);
+            randomInfect = random.Next(-10, 21);
+            randomFatality = random.Next(-10, 21);
+            InfectRate += randomInfect;
+            FatalityRate += randomFatality;
         }
 
         //버프 쿨타임 4일
@@ -146,7 +150,8 @@ namespace TheEpidemic
         public override void DeBuff()
         {
             IsBuff = false;
-            FatalityRate /= 2;
+            InfectRate -= randomInfect;
+            FatalityRate -= randomFatality;
             BuffDuration = 2;
         }
 
