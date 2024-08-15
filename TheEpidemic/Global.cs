@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TheEpidemic.ITouchStates;
-
-namespace TheEpidemic 
+﻿namespace TheEpidemic 
 {
     // Player와 상대하는 클래스로, 질병이 발견되면 치료제를 개발하는 클래스
 
-    public class Global :ITouchCure
+    public class Global
     {
         // 치료제 개발율
         private int _cure = 0;

@@ -1,10 +1,8 @@
-﻿using TheEpidemic.ITouchStates;
-
-namespace TheEpidemic
+﻿namespace TheEpidemic
 {
  
     // Player가 할 수 있는 행동 및 사람들에게 전염을 퍼트리는 역할을 하는 클래스
-    public class Player : ITouchBuff, ITouchDay, ITouchDeath, ITouchFatalityRate, ITouchGoldForFatality, ITouchGoldForInfect, ITouchInfected, ITouchInfectRate, ITouchSurvivor
+    public class Player 
     {
         // 본인이 선택한 전염병
         private Epidemic _epidemic;

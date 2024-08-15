@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TheEpidemic
+﻿namespace TheEpidemic
 {
     // Epdemic 전염병 팩토리 메서드
     public interface IEpidemicFactory
