@@ -25,7 +25,7 @@
             _gameManager.FatalityRate = epidemic.FatalityRate;
 
         }
-        // 전염률 증가 -> 콜백함수를 통해 GameManager의 데이터 Update
+        // 전염률 증가,골드감소, 전염률Upgrade골드 증가 -> 콜백함수를 통해 GameManager의 데이터 Update
         public void UpdateInfectRate()
         {
             if (_gameManager.Gold >= _gameManager.UpgradeGoldForInfect)
@@ -39,7 +39,7 @@
                 Console.WriteLine("돈이 부족해 강화를 할수가 없습니다.");
             }
         }
-        // 치사율 증가 -> 콜백함수를 통해 GameManager의 데이터 Update
+        // 치사율 증가, 골드감소 , 치사율Upgrade골드 증가-> 콜백함수를 통해 GameManager의 데이터 Update
         public void UpdateFatalityRate()
         {
             if (_gameManager.Gold >= _gameManager.UpgradeGoldForFatality)
@@ -67,7 +67,7 @@
                 Console.WriteLine($"아직 {_epidemic.BuffWaitTime}일 지나야합니다.");
             }
         }
-        // 다음 날짜로 넘어가기, 넘어갈때 마다 사용한 버프가 있다면 전염병의 지속시간 및 쿨타임 감소.
+        // 다음 날짜로 넘어가기, 넘어갈때 마다 사용한 버프가 있다면 지속시간 및 쿨타임감소, 지속 시간 끝나면 버프해제.
         public void Next()
         {
             FindSurvivor();
@@ -204,6 +204,7 @@
             }
         }
 
+        //아래부터는 콜백함수를 위한 함수들
         public void UpInfectRate( )
         {
             _gameManager.InfectRate += 5;
@@ -246,11 +247,13 @@
             _gameManager.FatalityRate = _epidemic.FatalityRate;
         }
 
+        //버프 지속시간은 epidemic에서 감소
         public void DecreaseBuffDuration()
         {
             _epidemic.BuffDuration--;
         }
 
+        //버프 쿨타임은 epidemic에서 감소
         public void DecreaseBuffWaitTime( )
         {
             _epidemic.BuffWaitTime--;
