@@ -8,31 +8,31 @@
         
         //SceneFactory를 활용해 (팩토리 메서드)
         // 메인화면, 전염병 선택신, 게임씬 3개의 씬 생성.
-        static void ResetScenes(Scene[] scenes)
+        static void ResetScenes(List<Scene> scenes)
         {
             ISceneFactory sceneFactory;
             Scene scene;
 
             sceneFactory = new FirstSceneFactory();
             scene = sceneFactory.CreateScene();
-            scenes[0] = scene;
+            scenes.Add(scene);
 
             sceneFactory = new ChoiceSceneFactory();
             scene = sceneFactory.CreateScene();
-            scenes[1] = scene;
+            scenes.Add(scene);
 
             sceneFactory = new GameSceneFactory();
             scene = sceneFactory.CreateScene();
-            scenes[2] = scene;
+            scenes.Add(scene);
 
         }
 
         // 3개의 씬을 순서대로 진행.
-        // 2번째씬부터는 Player클래스가 필요하므로 IAwake인터페이스를 통해 Player데이터 사용.
-        static void PlayGame(Scene[] scenes, Player player)
+        // 2번째씬부터는 Player클래스가 필요하므로 다운캐스팅을 하여IAwake인터페이스를 통해 Player데이터 사용.
+        static void PlayGame(List<Scene> scenes, Player player)
         {
             int sceneNum = 0;
-            while (sceneNum <= 2)
+            while (sceneNum <= scenes.Count)
             {
                 if (scenes[sceneNum] is IAwake)
                 {
@@ -51,7 +51,7 @@
         static void Main(string[] args)
         {
             Player player = new Player();
-            Scene[] scenes = new Scene[3];
+            List<Scene> scenes = new List<Scene>();
             ResetScenes(scenes);
             PlayGame(scenes, player);
         }
