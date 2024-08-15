@@ -27,4 +27,11 @@ namespace TheEpidemic
             return new Bacteria();
         }
     }
+    public class CoronaFactory : IEpidemicFactory
+    {
+        public Epidemic Create()
+        {
+            return new Corona();
+        }
+    }
 }
