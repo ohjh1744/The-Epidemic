@@ -9,6 +9,7 @@ using TheEpidemic.ITouchStates;
 namespace TheEpidemic 
 {
     // Player와 상대하는 클래스로, 질병이 발견되면 치료제를 개발하는 클래스
+
     public class Global :ITouchCure
     {
         // 치료제 개발율
