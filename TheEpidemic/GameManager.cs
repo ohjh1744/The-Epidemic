@@ -1,7 +1,4 @@
-﻿using TheEpidemic;
-using System.Text;
-
-namespace TheEpidemic
+﻿namespace TheEpidemic
 {
     //게임의 모든 데이터들을 관리하고 그 데이터를 보여주는 권한을 가진 관리자역할.
 
