@@ -85,9 +85,7 @@ namespace TheEpidemic
             Name = "박테리아";
             InfectRate = 3;
             FatalityRate = 2;
-            //쿨타임
             BuffWaitTime = 0;
-            //지속시간
             BuffDuration = 2;
             IsBuff = false;
         }
@@ -116,7 +114,48 @@ namespace TheEpidemic
 
     }
 
-    
+    public class Corona : Epidemic
+    {
+        public Corona()
+        {
+            Name = "코로나";
+            InfectRate = 3;
+            FatalityRate = 3;
+            BuffWaitTime = 0;
+            BuffDuration = 2;
+            IsBuff = false;
+        }
+
+        // 코로나 버프는 능력치 랜덤 조정 마이너스가 될수도, 플러스가 될수도
+        private void EnforceSkill()
+        {
+            Random random = new Random();
+            InfectRate = random.Next(-10, 21);
+            FatalityRate = random.Next(-10, 21);
+        }
+
+        //버프 쿨타임 4일
+        public override void Buff()
+        {
+            IsBuff = true;
+            EnforceSkill();
+            BuffWaitTime = 4;
+        }
+
+        //버프 지속시간 2일
+        public override void DeBuff()
+        {
+            IsBuff = false;
+            FatalityRate /= 2;
+            BuffDuration = 2;
+        }
+
+    }
+
+
+
+
+
 
 
 }
