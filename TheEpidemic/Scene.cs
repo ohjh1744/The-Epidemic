@@ -87,6 +87,13 @@
             Console.WriteLine($"#쿨타임: 4                                           #");
             Console.WriteLine($"#지속시간:2                                          #");
             Console.WriteLine("#####################################################");
+            Console.WriteLine($"#3. 코로나                                           #");
+            Console.WriteLine($"#전염률: 3                                           #");
+            Console.WriteLine($"#치사률: 3                                           #");
+            Console.WriteLine($"#스킬:  이틀동안 치사율,전염률 랜덤상승 or 감소      #");
+            Console.WriteLine($"#쿨타임: 4                                           #");
+            Console.WriteLine($"#지속시간:2                                          #");
+            Console.WriteLine("#####################################################");
             Console.WriteLine("원하는 전염병을 선택해주세요.(잘못입력시 재입력)");
         }
 
@@ -94,7 +101,7 @@
         public override void Input()
         {
             do
-            { } while (int.TryParse(Console.ReadLine(), out _numEpidemic) == false || _numEpidemic < 1 || _numEpidemic > 2);
+            { } while (int.TryParse(Console.ReadLine(), out _numEpidemic) == false || _numEpidemic < 1 || _numEpidemic > 3);
         }
 
         // EpidemicFactory를 활용해(팩토리메서드) 원하는 전염병 선택 후 Player가 사용할 전염병 저장.
@@ -109,6 +116,10 @@
                     break;
                 case 2:
                     epidemicFactory = new VirusFactory();
+                    _player.GetEpidemic(epidemicFactory.Create());
+                    break;
+                case 3:
+                     epidemicFactory = new CoronaFactory();
                     _player.GetEpidemic(epidemicFactory.Create());
                     break;
                 default:
