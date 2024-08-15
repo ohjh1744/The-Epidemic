@@ -1,10 +1,12 @@
 ﻿namespace TheEpidemic
 {
  
+    // Player가 할 수 있는 행동 및 사람들에게 전염을 퍼트리는 역할을 하는 클래스
     public class Player 
     {
- 
+        // 본인이 선택한 전염병
         private Epidemic _epidemic;
+        // 게임매니저정보를 많이 활용하기에 따로 내부에서 저장.
         private GameManager _gameManager;
 
         public Player( )
@@ -14,13 +16,16 @@
 
         public Epidemic Epidemic { get { return _epidemic; } set { _epidemic = value; } }
 
+        // 2번째 씬에서 원하는 전염병 선택 후 Player에 저장.
         public void GetEpidemic(Epidemic epidemic)
         {
             _epidemic = epidemic;
             _gameManager.Name = epidemic.Name;
             _gameManager.InfectRate = epidemic.InfectRate;
             _gameManager.FatalityRate = epidemic.FatalityRate;
+
         }
+        // 전염률 증가 -> 콜백함수를 통해 GameManager의 데이터 Update
         public void UpdateInfectRate()
         {
             if (_gameManager.Gold >= _gameManager.UpgradeGoldForInfect)
@@ -34,6 +39,7 @@
                 Console.WriteLine("돈이 부족해 강화를 할수가 없습니다.");
             }
         }
+        // 치사율 증가 -> 콜백함수를 통해 GameManager의 데이터 Update
         public void UpdateFatalityRate()
         {
             if (_gameManager.Gold >= _gameManager.UpgradeGoldForFatality)
@@ -48,6 +54,7 @@
             }
         }
 
+        // 버프 사용 -> 버프 사용을 통해 Update된 능력치를 콜백함수를 통해 GameManager의 데이터 Update
         public void UseSkill()
         {
             if(_epidemic.BuffWaitTime == 0)
@@ -60,6 +67,7 @@
                 Console.WriteLine($"아직 {_epidemic.BuffWaitTime}일 지나야합니다.");
             }
         }
+        // 다음 날짜로 넘어가기, 넘어갈때 마다 사용한 버프가 있다면 전염병의 지속시간 및 쿨타임 감소.
         public void Next()
         {
             FindSurvivor();
@@ -82,6 +90,7 @@
 
         }
 
+        // 살아있는 사람을 찾아 전염병 퍼트리기 및 감연된 사람은 kill
         public void FindSurvivor()
         {
             int[,] map = _gameManager.Map;
@@ -95,6 +104,7 @@
                 }
             }
 
+            // 감염자 찾아 죽이는 Bfs탐색 
             for (int i = 0; i < 20; i++)
             {
                 for (int j = 0; j < 30; j++)
@@ -113,7 +123,8 @@
                     visited[i, j] = false;
                 }
             }
-
+            
+            // 감염이 안된 사람을 찾아 감염시키는 Bfs탐색
             for (int i = 0; i < 20; i++)
             {
                 for (int j = 0; j < 30; j++)
@@ -125,6 +136,7 @@
                 }
             }
 
+            // GameManager 콜백함수에 저장.
             for (int i = 0; i < 20; i++)
             {
                 for (int j = 0; j < 30; j++)
@@ -144,6 +156,7 @@
 
         }
 
+        // 전염률에 따라 전염시키고, 감연된 사람들 중에서도 치사율에 따라 사망자 발생.
         public void InfectOrKill(int y, int x, int visitNum, int[,] map, bool[,] visited, int rate)
         {
             visited[y, x] = true;

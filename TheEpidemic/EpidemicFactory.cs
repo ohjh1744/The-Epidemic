@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace TheEpidemic
 {
+    // Epdemic 전염병 팩토리 메서드
     public interface IEpidemicFactory
     {
         Epidemic Create();

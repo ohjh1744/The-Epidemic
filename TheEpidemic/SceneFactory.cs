@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace TheEpidemic
 {
+    //씬 팩토리 메서드
     public interface ISceneFactory
     {
         Scene CreateScene();

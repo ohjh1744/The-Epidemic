@@ -9,11 +9,17 @@ namespace TheEpidemic
 {
     public abstract class Epidemic
     {
+        //전염병 이름
         private string _name;
+        //전염률
         private int _infectRate;
+        //치사율
         private int _fatalityRate;
+        //버프쿨타임
         private int _buffWaitTime;
+        //버프지속시간
         private int _buffDuration;
+        //버프활용했는지 체크
         private bool _isBuff;
 
 
@@ -24,8 +30,10 @@ namespace TheEpidemic
         public int BuffDuration { get { return _buffDuration; } set { _buffDuration = value; } }
         public bool IsBuff { get { return _isBuff; } set { _isBuff = value; } }
 
+        //버프 on함수
         public abstract void Buff();
 
+        //버프 off함수
         public abstract void DeBuff();
 
 
@@ -45,19 +53,21 @@ namespace TheEpidemic
             IsBuff = false;
         }
         
-
+        // 바이러스 버프는 전염률 2배 증가
         private void EnforceSkill()
         {
             InfectRate *= 2;
-            BuffWaitTime = 4;
         }
-
+        
+        // 버프 쿨타임 4일
         public override void Buff()
         {
             IsBuff = true;
             EnforceSkill();
+            BuffWaitTime = 4;
         }
 
+        // 버프 지속시간 2일
         public override void DeBuff()
         {
             IsBuff = false;
@@ -82,19 +92,21 @@ namespace TheEpidemic
             IsBuff = false;
         }
 
-
+        // 박테리아 버프는 치사율 2배 증가
         private void EnforceSkill()
         {
             FatalityRate *= 2;
-            BuffWaitTime = 4;
         }
 
+        //버프 쿨타임 4일
         public override void Buff()
         {
             IsBuff = true;
             EnforceSkill();
+            BuffWaitTime = 4;
         }
 
+        //버프 지속시간 2일
         public override void DeBuff()
         {
             IsBuff = false;
