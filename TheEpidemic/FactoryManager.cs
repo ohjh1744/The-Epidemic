@@ -10,18 +10,27 @@ namespace TheEpidemic
 
     public enum EpidemicType { 박테리아 =1, 바이러스=2, 코로나=3 }
     public enum SceneType { 메인화면 = 1, 전염병선택 = 2, 게임화면 = 3}
+
     //FactoryMethod패턴을 활용하는 팩토리들을 관리해주는 Manager
-    //원하는 인덱스에 따라 원하는Factory를 불러 객체를 생성해주게 도와주는 역할
+    //원하는 Factory를 불러 인덱스에 따라 객체를 생성해주게 도와주는 역할
     public class FactoryManager
     {
+        // 싱글톤 패턴을 위한 전역변수
         private static FactoryManager _instance;
+        //Epidemic 생성관련 딕셔너리의 키
         private List<EpidemicType> _epidemicKeys;
+        //Epidemic 생성관련 딕셔너리의 벨류
         private List<IEpidemicFactory> _epidemicValues;
+        //씬 생성관련 딕셔너리의 키
         private List<SceneType> _sceneKeys;
+        //씬 생성관련 딕셔너리의 벨류
         private List<ISceneFactory> _sceneValues;
+        //Epidemic 생성관련 딕셔너리
         private Dictionary<EpidemicType, IEpidemicFactory> _epidemicFactoryType;
+        //씬 생성관련 딕셔너리
         private Dictionary<SceneType, ISceneFactory> _sceneFactoryType;
 
+        //싱글톤 패턴 적용
         public static FactoryManager Instance
         {
             get
@@ -34,6 +43,7 @@ namespace TheEpidemic
             }
         }
 
+        // 생성자를 사용해 모든 List와 딕셔너리 값 초기화
         public FactoryManager()
         {
             _epidemicKeys = new List<EpidemicType>();
@@ -64,6 +74,7 @@ namespace TheEpidemic
             }
         }
 
+        // Epidemic 생성함수
         public Epidemic CreateEpidemic(EpidemicType epidemicType)
         {
             if (_epidemicFactoryType.TryGetValue(epidemicType, out IEpidemicFactory factory))
@@ -73,16 +84,10 @@ namespace TheEpidemic
             return null;
         }
 
+        //Scene 생성함수
         public Scene CreateScene(SceneType sceneType)
         {
-            if (_sceneFactoryType.ContainsKey(sceneType))
-            {
-                Console.WriteLine("키가 들어잇습니다");
-            }
-            else
-            {
-                Console.WriteLine("안들어있습니다.");
-            }
+
             if (_sceneFactoryType.TryGetValue(sceneType, out ISceneFactory factory))
             {
                 return factory.Create();
