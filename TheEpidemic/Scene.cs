@@ -105,27 +105,12 @@
             { } while (int.TryParse(Console.ReadLine(), out _numEpidemic) == false || _numEpidemic < 1 || _numEpidemic > 3);
         }
 
-        // EpidemicFactory를 활용해(팩토리메서드) 원하는 전염병 선택 후 Player가 사용할 전염병 저장.
+        //EpidemicFactory(팩토리 메서드) 을 FactoryManager(싱글톤)의 딕셔너리에 따로 저장하여
+        // 원하는 전염병 선택 후 Datamanager의 딕셔너리Player가 사용할 전염병 저장.
         public override void Update()
         {
             IEpidemicFactory epidemicFactory;
-            switch (_numEpidemic)
-            {
-                case 1:
-                    epidemicFactory = new BacteriaFactory();
-                    _player.GetEpidemic(epidemicFactory.Create());
-                    break;
-                case 2:
-                    epidemicFactory = new VirusFactory();
-                    _player.GetEpidemic(epidemicFactory.Create());
-                    break;
-                case 3:
-                     epidemicFactory = new CoronaFactory();
-                    _player.GetEpidemic(epidemicFactory.Create());
-                    break;
-                default:
-                    break;
-            }
+            _player.GetEpidemic(FactoryManager.Instance.CreateEpidemic((EpidemicType)_numEpidemic));
             FinishScene = true;
         }
 
