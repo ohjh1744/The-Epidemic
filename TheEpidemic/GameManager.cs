@@ -29,9 +29,9 @@
         // 현재 골드
         private int _gold;
         // 전염률 증가를 위해 필요한 골드
-        private int _upgradeGoldForInfect;
+        private int _goldForInfect;
         // 치사율 증가를 위해 필요한 골드
-        private int _upgradeGoldForFatality;
+        private int _goldForFatality;
 
         // Player와 Global에서 업데이트된 내용에 따라 GameManager의 데이터들도 Update하기위한 콜백함수. -> 옵저버패턴
         public event Action Update;
@@ -83,8 +83,8 @@
             _survivor = _human;
             _day = 1;
             _gold = 0;
-            _upgradeGoldForInfect = 20;
-            _upgradeGoldForFatality = 20;
+            _goldForInfect = 20;
+            _goldForFatality = 20;
 
         }
 
@@ -111,8 +111,8 @@
         public int Survivor { get { return _survivor; } set { _survivor = value; } }
         public int Day { get { return _day; } set { _day = value; } }
         public int Gold { get { return _gold; } set { _gold = value; } }
-        public int UpgradeGoldForInfect { get { return _upgradeGoldForInfect; } set { _upgradeGoldForInfect = value; } }
-        public int UpgradeGoldForFatality { get { return _upgradeGoldForFatality; } set { _upgradeGoldForFatality = value; } }
+        public int GoldForInfect { get { return _goldForInfect; } set { _goldForInfect = value; } }
+        public int GoldForFatality { get { return _goldForFatality; } set { _goldForFatality = value; } }
        
         // 현재 정보 출력
         public void Show()
