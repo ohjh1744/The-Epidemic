@@ -1,13 +1,13 @@
 ﻿namespace TheEpidemic
 {
     internal class Program
-    {   
+    {
         // 전염병 주식회사
         // 게임 설명: 모은 인류를 멸종시키면 승리, 치료제가 나오기 전에 멸종시켜야함.
         // 게임 순서: 총 3개의 씬으로, 메인화면씬 ->  전염병 선택씬 -> 게임씬
-        
-        //SceneFactory(팩토리 메서드) 을 DataManager(싱글톤)의 딕셔너리에 따로 저장하여
-        // FactoryManager의 딕셔너리에서 정보를 가져와 씬 생성 후 저장.
+
+        //FactoryManager(싱글톤패턴)에서 SceneFactory(팩토리메서드)를 사용해
+        // 씬 생성 후 저장.
         static void ResetScenes(List<Scene> scenes)
         {
             for(int i = 1; i <= 3; i++)

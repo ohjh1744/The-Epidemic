@@ -105,7 +105,7 @@
             { } while (int.TryParse(Console.ReadLine(), out _numEpidemic) == false || _numEpidemic < 1 || _numEpidemic > 3);
         }
 
-        //팩토리매니저(싱글톤패턴)에서 EpidemicFactory를 사용해
+        //FactoryManager(싱글톤패턴)에서 EpidemicFactory를 사용해
         // 원하는 전염병 생성 및 Player에 저장.
         public override void Update()
         {

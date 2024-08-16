@@ -12,7 +12,7 @@ namespace TheEpidemic
     public enum SceneType { 메인화면 = 1, 전염병선택 = 2, 게임화면 = 3}
 
     //FactoryMethod패턴을 활용하는 팩토리들을 관리해주는 Manager
-    //원하는 Factory를 불러 인덱스에 따라 객체를 생성해주게 도와주는 역할
+    //원하는 Factory를 불러 인덱스에 따라 Dictionary에 저장되어있는 값을 가져와 객체를 생성해주게 도와주는 역할
     public class FactoryManager
     {
         // 싱글톤 패턴을 위한 전역변수
