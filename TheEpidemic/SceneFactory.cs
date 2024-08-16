@@ -3,12 +3,12 @@
     //씬 팩토리 메서드
     public interface ISceneFactory
     {
-        Scene CreateScene();
+        Scene Create();
     }
 
     public class FirstSceneFactory : ISceneFactory
     {
-        public Scene CreateScene()
+        public Scene Create()
         {
             return new FirstScene();
         }
@@ -16,7 +16,7 @@
 
     public class ChoiceSceneFactory : ISceneFactory
     {
-        public Scene CreateScene()
+        public Scene Create()
         {
             return new ChoiceScene();
         }
@@ -24,7 +24,7 @@
 
     public class GameSceneFactory : ISceneFactory
     {
-        public Scene CreateScene()
+        public Scene Create()
         {
             return new GameScene();
         }
