@@ -1,5 +1,11 @@
 ﻿namespace TheEpidemic
 {
+
+    // 개인적으로 아쉬운 부분
+    // Choice Scene Render부분에서 직접 문자를 쳐서 출력하지 않고
+    // 따로 정보를 저장해 출력하는식으로 표현하면 좋지 않았을까.. 하는 생각이 듭니다.
+    // choice Scene render 부분에서 수정하지 않고 epidemic을 확장할수 있도록.
+    // 그 외에 피드백도 해주시면 감사하겠습니다..!
     internal class Program
     {
         // 전염병 주식회사
