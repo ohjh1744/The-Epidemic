@@ -105,8 +105,8 @@
             { } while (int.TryParse(Console.ReadLine(), out _numEpidemic) == false || _numEpidemic < 1 || _numEpidemic > 3);
         }
 
-        //EpidemicFactory(팩토리 메서드) 을 FactoryManager(싱글톤)의 딕셔너리에 따로 저장하여
-        // 원하는 전염병 선택 후 Datamanager의 딕셔너리Player가 사용할 전염병 저장.
+        //팩토리매니저(싱글톤패턴)에서 EpidemicFactory를 사용해
+        // 원하는 전염병 생성 및 Player에 저장.
         public override void Update()
         {
             IEpidemicFactory epidemicFactory;
@@ -180,8 +180,8 @@
             {
                 Console.WriteLine("---------------------------------------------------------------------------------");
                 Console.WriteLine($"하고 싶은 행동을 고르세요. (잘못입력시 재입력)       보유골드: {_gameManager.Gold}G");
-                Console.WriteLine($"1. 전염률 증가({_gameManager.UpgradeGoldForInfect}G): ");
-                Console.WriteLine($"2. 치사율 증가({_gameManager.UpgradeGoldForFatality}G): ");
+                Console.WriteLine($"1. 전염률 증가({_gameManager.GoldForInfect}G): ");
+                Console.WriteLine($"2. 치사율 증가({_gameManager.GoldForFatality}G): ");
                 Console.WriteLine($"3. 버프 사용 (쿨타임 {_player.Epidemic.BuffWaitTime}일 남았습니다.)");
                 Console.WriteLine("4. 다음 날로 넘어가기");
                 Console.WriteLine("---------------------------------------------------------------------------------");
@@ -194,10 +194,10 @@
             switch (_numInput)
             {
                 case 1:
-                    _player.UpdateInfectRate();
+                    _player.UpInfectRate();
                     break;
                 case 2:
-                    _player.UpdateFatalityRate();
+                    _player.UpFatalityRate();
                     break;
                 case 3:
                     _player.UseSkill();
