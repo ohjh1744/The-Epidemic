@@ -24,10 +24,10 @@
         public bool IsBuff { get { return _isBuff; } set { _isBuff = value; } }
 
         //버프 on함수
-        public abstract void Buff();
+        public abstract void OnBuff();
 
         //버프 off함수
-        public abstract void DeBuff();
+        public abstract void OnDeBuff();
 
 
     }
@@ -53,7 +53,7 @@
         }
         
         // 버프 쿨타임 4일
-        public override void Buff()
+        public override void OnBuff()
         {
             IsBuff = true;
             EnforceSkill();
@@ -61,7 +61,7 @@
         }
 
         // 버프 지속시간 2일
-        public override void DeBuff()
+        public override void OnDeBuff()
         {
             IsBuff = false;
             InfectRate /= 2;
@@ -90,7 +90,7 @@
         }
 
         //버프 쿨타임 4일
-        public override void Buff()
+        public override void OnBuff()
         {
             IsBuff = true;
             EnforceSkill();
@@ -98,7 +98,7 @@
         }
 
         //버프 지속시간 2일
-        public override void DeBuff()
+        public override void OnDeBuff()
         {
             IsBuff = false;
             FatalityRate /= 2;
@@ -132,7 +132,7 @@
         }
 
         //버프 쿨타임 3일
-        public override void Buff()
+        public override void OnBuff()
         {
             IsBuff = true;
             EnforceSkill();
@@ -140,7 +140,7 @@
         }
 
         //버프 지속시간 2일
-        public override void DeBuff()
+        public override void OnDeBuff()
         {
             IsBuff = false;
             InfectRate -= randomInfect;
