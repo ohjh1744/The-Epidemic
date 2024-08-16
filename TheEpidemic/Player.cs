@@ -1,15 +1,15 @@
 ﻿namespace TheEpidemic
 {
- 
+
     // Player가 할 수 있는 행동 및 사람들에게 전염을 퍼트리는 역할을 하는 클래스
-    public class Player 
+    public class Player
     {
         // 본인이 선택한 전염병
         private Epidemic _epidemic;
         // 게임매니저정보를 많이 활용하기에 따로 내부에서 저장.
         private GameManager _gameManager;
 
-        public Player( )
+        public Player()
         {
             _gameManager = GameManager.Instance;
         }
@@ -28,11 +28,12 @@
         // 전염률 증가,골드감소, 전염률Upgrade골드 증가 -> 콜백함수를 통해 GameManager의 데이터 Update
         public void UpInfectRate()
         {
-            if (_gameManager.Gold >= _gameManager.UpgradeGoldForInfect)
+            if (_gameManager.Gold >= _gameManager.GoldForInfect)
             {
                 _gameManager.Update += UpdateInfectRate;
                 _gameManager.Update += UseGoldForInfect;
                 _gameManager.Update += UpgradeGoldForInfect;
+                Console.WriteLine("hi");
             }
             else
             {
@@ -42,7 +43,7 @@
         // 치사율 증가, 골드감소 , 치사율Upgrade골드 증가-> 콜백함수를 통해 GameManager의 데이터 Update
         public void UpFatalityRate()
         {
-            if (_gameManager.Gold >= _gameManager.UpgradeGoldForFatality)
+            if (_gameManager.Gold >= _gameManager.GoldForFatality)
             {
                 _gameManager.Update += UpdateFatalityRate;
                 _gameManager.Update += UseGoldForFatality;
@@ -57,9 +58,9 @@
         // 버프 사용 -> 버프 사용을 통해 Update된 능력치를 콜백함수를 통해 GameManager의 데이터 Update
         public void UseSkill()
         {
-            if(_epidemic.BuffWaitTime == 0)
+            if (_epidemic.BuffWaitTime == 0)
             {
-                _epidemic.Buff();
+                _epidemic.OnBuff();
                 _gameManager.Update += OnOffBuff;
             }
             else
@@ -72,7 +73,7 @@
         {
             FindSurvivor();
             _gameManager.Update += IncreaseDay;
-            if(_epidemic.IsBuff == true)
+            if (_epidemic.IsBuff == true)
             {
                 if (_epidemic.BuffDuration > 0)
                 {
@@ -80,11 +81,12 @@
                 }
                 else if (_epidemic.BuffDuration == 0)
                 {
-                    _epidemic.DeBuff();
+                    _epidemic.OnDeBuff();
                     _gameManager.Update += OnOffBuff;
                 }
             }
-            if (_epidemic.BuffWaitTime != 0){
+            if (_epidemic.BuffWaitTime != 0)
+            {
                 _gameManager.Update += UpdateBuffWaitTime;
             }
 
@@ -116,14 +118,14 @@
                 }
             }
 
-            for (int i = 0; i < 20; i++)  
+            for (int i = 0; i < 20; i++)
             {
                 for (int j = 0; j < 30; j++)
                 {
                     visited[i, j] = false;
                 }
             }
-            
+
             // 감염이 안된 사람을 찾아 감염시키는 Bfs탐색
             for (int i = 0; i < 20; i++)
             {
@@ -169,7 +171,7 @@
             int randomNumber = random.Next(0, 101);
             if (rate >= randomNumber)
             {
-                map[y, x] = visitNum+1;
+                map[y, x] = visitNum + 1;
                 visited[y, x] = true;
                 _gameManager.Gold += 1;
             }
@@ -185,17 +187,17 @@
                 {
                     int nx = cx + dx[i];
                     int ny = cy + dy[i];
-                    if (nx < 0 || ny < 0 || nx >= 30|| ny >= 20)
+                    if (nx < 0 || ny < 0 || nx >= 30 || ny >= 20)
                     {
                         continue;
                     }
-                    if (visited[ny,nx] == false && map[ny, nx] == visitNum)
+                    if (visited[ny, nx] == false && map[ny, nx] == visitNum)
                     {
                         random = new Random();
                         randomNumber = random.Next(0, 101);
-                        if(rate >= randomNumber)
+                        if (rate >= randomNumber)
                         {
-                            map[ny, nx] = visitNum+1;
+                            map[ny, nx] = visitNum + 1;
                             visited[ny, nx] = true;
                             _gameManager.Gold += 1;
                         }
@@ -205,39 +207,39 @@
         }
 
         //아래부터는 콜백함수를 위한 함수들
-        public void UpdateInfectRate( )
+        public void UpdateInfectRate()
         {
             _gameManager.InfectRate += 5;
             _epidemic.InfectRate += 5;
         }
 
-        public void UseGoldForInfect( )
+        public void UseGoldForInfect()
         {
-            _gameManager.Gold -= _gameManager.UpgradeGoldForInfect;
+            _gameManager.Gold -= _gameManager.GoldForInfect;
         }
 
-        public void UpgradeGoldForInfect( )
+        public void UpgradeGoldForInfect()
         {
-            _gameManager.UpgradeGoldForInfect += 20;
+            _gameManager.GoldForInfect += 20;
         }
 
-        public void UpdateFatalityRate( )
+        public void UpdateFatalityRate()
         {
             _gameManager.FatalityRate += 5;
             _epidemic.FatalityRate += 5;
         }
 
-        public void UseGoldForFatality( )
+        public void UseGoldForFatality()
         {
-            _gameManager.Gold -= _gameManager.UpgradeGoldForFatality;
+            _gameManager.Gold -= _gameManager.GoldForFatality;
         }
 
-        public void UpgradeGoldForFatality( )
+        public void UpgradeGoldForFatality()
         {
-            _gameManager.UpgradeGoldForFatality += 20;
+            _gameManager.GoldForFatality += 20;
         }
 
-        public void IncreaseDay( )
+        public void IncreaseDay()
         {
             _gameManager.Day++;
         }
@@ -254,7 +256,7 @@
         }
 
         //버프 쿨타임은 epidemic에서 감소
-        public void UpdateBuffWaitTime( )
+        public void UpdateBuffWaitTime()
         {
             _epidemic.BuffWaitTime--;
         }
