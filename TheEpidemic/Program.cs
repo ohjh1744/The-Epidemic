@@ -23,7 +23,7 @@
         }
 
         // 3개의 씬을 순서대로 진행.
-        // 2번째씬부터는 Player클래스가 필요하므로 다운캐스팅을 하여IAwake인터페이스를 통해 Player데이터 사용.
+        // 2번째씬부터는 Player클래스가 필요하므로 캐스팅을 하여IAwake인터페이스를 통해 Player데이터 사용.
         static void PlayGame(List<Scene> scenes, Player player)
         {
             int sceneNum = 0;
